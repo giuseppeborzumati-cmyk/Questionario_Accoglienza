@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionario di Orientamento</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.5s ease;
+        }
+        .container-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.5s ease-in-out;
+            border: 1px solid #e2e8f0;
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .container-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .btn-primary {
+            background-color: #4f46e5;
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 1rem;
+            font-weight: 700;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            box-shadow: 0 6px 12px -2px rgba(79, 70, 229, 0.4);
+            animation: pulse-animation 2s infinite;
+        }
+        .btn-primary:hover {
+            background-color: #4338ca;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 24px -6px rgba(79, 70, 229, 0.6);
+            animation: none;
+        }
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #4b5563;
+            padding: 1rem 2.5rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .btn-secondary:hover {
+            background-color: #cbd5e1;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .input-text {
+            border: 1px solid #d1d5db;
+            border-radius: 1rem;
+            padding: 1rem;
+            width: 100%;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .input-text:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.3);
+            outline: none;
+        }
+        .message-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #10b981;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .message-box.show {
+            display: block;
+            opacity: 1;
+        }
+        .stats-container {
+            display: none;
+        }
+        .teacher-login, .auth-section, .survey-section {
+            display: none;
+        }
+        .initial-page {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.8s ease-in-out forwards;
+        }
+        .navigation-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 500;
+            display: none;
+            padding: 1rem 2rem;
+        }
+        .welcome-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #a78bfa, #818cf8, #3b82f6, #60a5fa);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out;
+        }
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes pulse-animation {
+            0% { transform: scale(1); box-shadow: 0 6px 12px -2px rgba(79, 70, 229, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 6px 12px -2px rgba(79, 70, 229, 0.4); }
+        }
+        .pie-chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .pie-chart-wrapper {
+            width: 100%;
+            max-width: 400px;
+        }
+        @media (min-width: 768px) {
+            .pie-chart-wrapper {
+                width: calc(50% - 1rem);
+            }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div id="welcome-page" class="welcome-page p-4">
+        <div class="container-card p-8 sm:p-12 text-center max-w-2xl shadow-2xl">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-4">
+                <span class="mr-2">📚</span> Accoglienza Classi Prime
+            </h1>
+            <p class="text-gray-600 mb-4 text-sm sm:text-base">
+                <span class="mr-2">✨</span> Care ragazze e cari ragazzi,
+                <br>
+                vi chiediamo di compilare un questionario a risposta multipla, pensato per raccogliere informazioni utili sia a fini statistici interni alla scuola sia per conoscere meglio ciascuno di voi, in vista del vostro percorso nel primo anno della scuola secondaria di secondo grado. Le domande riguardano le vostre conoscenze personali, le abitudini di studio e le preferenze scolastiche. Non si tratta di una “verifica”, ma di uno strumento per aiutarci a comprendere meglio le vostre esigenze e a organizzare in modo più efficace le attività didattiche e i servizi della scuola. Vi invitiamo quindi a rispondere con attenzione e sincerità, scegliendo per ogni quesito la risposta che ritenete più adatta a voi.
+                <br>
+                <br>
+                Vi auguriamo buon lavoro e vi ringraziamo per la collaborazione.
+                <span class="ml-2">🎓</span>
+            </p>
+            <button id="start-journey-btn" class="btn-primary mt-6">
+                Inizia il viaggio <span class="ml-2">🚀</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="message-box" class="message-box"></div>
+    <div id="navigation-bar" class="navigation-bar flex justify-between items-center">
+        <h2 id="page-title" class="text-xl font-bold text-gray-700"></h2>
+        <button id="nav-back-btn" class="btn-secondary w-auto">Torna Indietro</button>
+    </div>
+
+    <!-- Pagina Iniziale -->
+    <div id="initial-page" class="initial-page w-full max-w-2xl">
+        <div class="container-card p-8 sm:p-12 text-center">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-800 mb-4">Questionario di Orientamento</h1>
+            <p class="text-lg sm:text-xl text-gray-600 mb-6">Scuola Superiore 'Primo Levi' di Seregno</p>
+            <div class="space-y-4">
+                <button id="start-survey-btn" class="btn-primary w-full sm:w-auto">Inizia Questionario</button>
+                <button id="toggle-teacher-login" class="btn-secondary w-full sm:w-auto">Statistiche per Docenti</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sezione di Autenticazione per Alunni (conferma) -->
+    <div id="auth-section" class="auth-section w-full max-w-2xl">
+        <div class="container-card p-6 sm:p-8">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-4 text-center">Accesso Studenti</h2>
+            <p class="text-gray-500 mb-6 text-center">Per iniziare il questionario, inserisci i tuoi dati.</p>
+            <form id="auth-form" class="space-y-4">
+                <div>
+                    <label for="auth-nome" class="block text-sm font-medium text-gray-700">Nome</label>
+                    <input type="text" id="auth-nome" name="nome" class="mt-1 input-text rounded-md" required>
+                </div>
+                <div>
+                    <label for="auth-cognome" class="block text-sm font-medium text-gray-700">Cognome</label>
+                    <input type="text" id="auth-cognome" name="cognome" class="mt-1 input-text rounded-md" required>
+                </div>
+                <div>
+                    <label for="auth-classe" class="block text-sm font-medium text-gray-700">Classe</label>
+                    <select id="auth-classe" name="classe" class="mt-1 input-text rounded-md" required>
+                        <option value="">Seleziona la tua classe</option>
+                        <option value="1A">1A</option>
+                        <option value="1B">1B</option>
+                        <option value="1D">1D</option>
+                        <option value="1I">1I</option>
+                        <option value="1L">1L</option>
+                        <option value="1J">1J</option>
+                        <option value="1T">1T</option>
+                        <option value="1V">1V</option>
+                        <option value="1S">1S</option>
+                        <option value="1P">1P</option>
+                        <option value="1N">1N</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="auth-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="auth-password" name="password" class="mt-1 input-text rounded-md" required>
+                    <p class="mt-1 text-xs text-gray-500">La password per gli studenti è "studente".</p>
+                </div>
+                <div class="flex justify-center mt-6">
+                    <button type="submit" class="btn-primary w-full sm:w-auto">Accedi al Questionario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sezione per il questionario -->
+    <div id="survey-section" class="survey-section w-full max-w-3xl">
+        <div class="container-card p-6 sm:p-8">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2 text-center">Questionario di Accoglienza</h2>
+            <p class="text-gray-500 mb-6 text-center">Rispondi con attenzione a tutte le domande.</p>
+            <form id="survey-form" class="space-y-8">
+                <!-- Domande a Risposta Multipla -->
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">1. Da quale scuola media provieni?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q1_a" name="q1" value="Scuola media statale" class="form-radio" required><label for="q1_a" class="ml-2">Scuola media statale</label></div>
+                        <div class="flex items-center"><input type="radio" id="q1_b" name="q1" value="Scuola privata" class="form-radio"><label for="q1_b" class="ml-2">Scuola privata</label></div>
+                        <div class="flex items-center"><input type="radio" id="q1_c" name="q1" value="Scuola paritaria" class="form-radio"><label for="q1_c" class="ml-2">Scuola paritaria</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">2. Come hai conosciuto l'Istituto Primo Levi?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q2_a" name="q2" value="Durante gli open day" class="form-radio" required><label for="q2_a" class="ml-2">Durante gli open day</label></div>
+                        <div class="flex items-center"><input type="radio" id="q2_b" name="q2" value="Tramite internet" class="form-radio"><label for="q2_b" class="ml-2">Tramite internet</label></div>
+                        <div class="flex items-center"><input type="radio" id="q2_c" name="q2" value="Attraverso amici o parenti" class="form-radio"><label for="q2_c" class="ml-2">Attraverso amici o parenti</label></div>
+                        <div class="flex items-center"><input type="radio" id="q2_d" name="q2" value="Altro" class="form-radio"><label for="q2_d" class="ml-2">Altro</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">3. Come raggiungi ogni giorno la scuola?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q3_a" name="q3" value="In autobus" class="form-radio" required><label for="q3_a" class="ml-2">In autobus</label></div>
+                        <div class="flex items-center"><input type="radio" id="q3_b" name="q3" value="In auto" class="form-radio"><label for="q3_b" class="ml-2">In auto</label></div>
+                        <div class="flex items-center"><input type="radio" id="q3_c" name="q3" value="A piedi" class="form-radio"><label for="q3_c" class="ml-2">A piedi</label></div>
+                        <div class="flex items-center"><input type="radio" id="q3_d" name="q3" value="In bicicletta" class="form-radio"><label for="q3_d" class="ml-2">In bicicletta</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">4. Chi ha scelto l'indirizzo di studio?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q4_a" name="q4" value="Un insegnante" class="form-radio" required><label for="q4_a" class="ml-2">Un insegnante</label></div>
+                        <div class="flex items-center"><input type="radio" id="q4_b" name="q4" value="Insieme ai genitori" class="form-radio"><label for="q4_b" class="ml-2">Insieme ai genitori</label></div>
+                        <div class="flex items-center"><input type="radio" id="q4_c" name="q4" value="I miei genitori" class="form-radio"><label for="q4_c" class="ml-2">I miei genitori</label></div>
+                        <div class="flex items-center"><input type="radio" id="q4_d" name="q4" value="Io stesso/a" class="form-radio"><label for="q4_d" class="ml-2">Io stesso/a</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">5. Perché hai scelto questo indirizzo?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q5_a" name="q5" value="Perché consigliato" class="form-radio" required><label for="q5_a" class="ml-2">Perché consigliato</label></div>
+                        <div class="flex items-center"><input type="radio" id="q5_b" name="q5" value="Per passione" class="form-radio"><label for="q5_b" class="ml-2">Per passione</label></div>
+                        <div class="flex items-center"><input type="radio" id="q5_c" name="q5" value="Per le opportunità lavorative" class="form-radio"><label for="q5_c" class="ml-2">Per le opportunità lavorative</label></div>
+                        <div class="flex items-center"><input type="radio" id="q5_d" name="q5" value="Perché vicino a casa" class="form-radio"><label for="q5_d" class="ml-2">Perché vicino a casa</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">6. Hai partecipato agli Open Day?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q6_a" name="q6" value="Si" class="form-radio" required><label for="q6_a" class="ml-2">Sì</label></div>
+                        <div class="flex items-center"><input type="radio" id="q6_b" name="q6" value="No" class="form-radio"><label for="q6_b" class="ml-2">No</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">7. Hai partecipato agli stage di orientamento?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q7_a" name="q7" value="Si" class="form-radio" required><label for="q7_a" class="ml-2">Sì</label></div>
+                        <div class="flex items-center"><input type="radio" id="q7_b" name="q7" value="No" class="form-radio"><label for="q7_b" class="ml-2">No</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">8. Quante ore al giorno dedichi allo studio?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q8_a" name="q8" value="Meno di 1 ora" class="form-radio" required><label for="q8_a" class="ml-2">Meno di 1 ora</label></div>
+                        <div class="flex items-center"><input type="radio" id="q8_b" name="q8" value="1-2 ore" class="form-radio"><label for="q8_b" class="ml-2">1-2 ore</label></div>
+                        <div class="flex items-center"><input type="radio" id="q8_c" name="q8" value="2-3 ore" class="form-radio"><label for="q8_c" class="ml-2">2-3 ore</label></div>
+                        <div class="flex items-center"><input type="radio" id="q8_d" name="q8" value="Più di 3 ore" class="form-radio"><label for="q8_d" class="ml-2">Più di 3 ore</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">9. Pratichi sport? Se sì, quante volte a settimana?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q9_a" name="q9" value="Non pratico sport" class="form-radio" required><label for="q9_a" class="ml-2">Non pratico sport</label></div>
+                        <div class="flex items-center"><input type="radio" id="q9_b" name="q9" value="1-2 volte a settimana" class="form-radio"><label for="q9_b" class="ml-2">1-2 volte a settimana</label></div>
+                        <div class="flex items-center"><input type="radio" id="q9_c" name="q9" value="3 o più volte a settimana" class="form-radio"><label for="q9_c" class="ml-2">3 o più volte a settimana</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">10. Qual è la tua materia preferita?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q10_a" name="q10" value="Italiano" class="form-radio" required><label for="q10_a" class="ml-2">Italiano</label></div>
+                        <div class="flex items-center"><input type="radio" id="q10_b" name="q10" value="Matematica" class="form-radio"><label for="q10_b" class="ml-2">Matematica</label></div>
+                        <div class="flex items-center"><input type="radio" id="q10_c" name="q10" value="Scienze" class="form-radio"><label for="q10_c" class="ml-2">Scienze</label></div>
+                        <div class="flex items-center"><input type="radio" id="q10_d" name="q10" value="Storia" class="form-radio"><label for="q10_d" class="ml-2">Storia</label></div>
+                        <div class="flex items-center"><input type="radio" id="q10_e" name="q10" value="Altro" class="form-radio"><label for="q10_e" class="ml-2">Altro</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">11. Hai un animale domestico?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q11_a" name="q11" value="Sì" class="form-radio" required><label for="q11_a" class="ml-2">Sì</label></div>
+                        <div class="flex items-center"><input type="radio" id="q11_b" name="q11" value="No" class="form-radio"><label for="q11_b" class="ml-2">No</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">12. Qual è il tuo piatto preferito?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q12_a" name="q12" value="Pasta" class="form-radio" required><label for="q12_a" class="ml-2">Pasta</label></div>
+                        <div class="flex items-center"><input type="radio" id="q12_b" name="q12" value="Pizza" class="form-radio"><label for="q12_b" class="ml-2">Pizza</label></div>
+                        <div class="flex items-center"><input type="radio" id="q12_c" name="q12" value="Carne" class="form-radio"><label for="q12_c" class="ml-2">Carne</label></div>
+                        <div class="flex items-center"><input type="radio" id="q12_d" name="q12" value="Pesce" class="form-radio"><label for="q12_d" class="ml-2">Pesce</label></div>
+                        <div class="flex items-center"><input type="radio" id="q12_e" name="q12" value="Altro" class="form-radio"><label for="q12_e" class="ml-2">Altro</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">13. Hai mai vissuto all'estero?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q13_a" name="q13" value="Solo per vacanza" class="form-radio" required><label for="q13_a" class="ml-2">Solo per vacanza</label></div>
+                        <div class="flex items-center"><input type="radio" id="q13_b" name="q13" value="Sì, per meno di un anno" class="form-radio"><label for="q13_b" class="ml-2">Sì, per meno di un anno</label></div>
+                        <div class="flex items-center"><input type="radio" id="q13_c" name="q13" value="Sì, per più di un anno" class="form-radio"><label for="q13_c" class="ml-2">Sì, per più di un anno</label></div>
+                        <div class="flex items-center"><input type="radio" id="q13_d" name="q13" value="No, mai" class="form-radio"><label for="q13_d" class="ml-2">No, mai</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">14. Hai bisogno di supporto per lo studio?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q14_a" name="q14" value="Sì, sempre" class="form-radio" required><label for="q14_a" class="ml-2">Sì, sempre</label></div>
+                        <div class="flex items-center"><input type="radio" id="q14_b" name="q14" value="Qualche volta" class="form-radio"><label for="q14_b" class="ml-2">Qualche volta</label></div>
+                        <div class="flex items-center"><input type="radio" id="q14_c" name="q14" value="Raramente" class="form-radio"><label for="q14_c" class="ml-2">Raramente</label></div>
+                        <div class="flex items-center"><input type="radio" id="q14_d" name="q14" value="Mai" class="form-radio"><label for="q14_d" class="ml-2">Mai</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">15. Usi spesso il computer per studiare?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q15_a" name="q15" value="Sì, sempre" class="form-radio" required><label for="q15_a" class="ml-2">Sì, sempre</label></div>
+                        <div class="flex items-center"><input type="radio" id="q15_b" name="q15" value="Solo per alcune materie" class="form-radio"><label for="q15_b" class="ml-2">Solo per alcune materie</label></div>
+                        <div class="flex items-center"><input type="radio" id="q15_c" name="q15" value="Raramente" class="form-radio"><label for="q15_c" class="ml-2">Raramente</label></div>
+                        <div class="flex items-center"><input type="radio" id="q15_d" name="q15" value="Mai" class="form-radio"><label for="q15_d" class="ml-2">Mai</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">16. Qual è il tuo colore preferito?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q16_a" name="q16" value="Blu" class="form-radio" required><label for="q16_a" class="ml-2">Blu</label></div>
+                        <div class="flex items-center"><input type="radio" id="q16_b" name="q16" value="Rosso" class="form-radio"><label for="q16_b" class="ml-2">Rosso</label></div>
+                        <div class="flex items-center"><input type="radio" id="q16_c" name="q16" value="Giallo" class="form-radio"><label for="q16_c" class="ml-2">Giallo</label></div>
+                        <div class="flex items-center"><input type="radio" id="q16_d" name="q16" value="Verde" class="form-radio"><label for="q16_d" class="ml-2">Verde</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">17. Ti piace lavorare in gruppo?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q17_a" name="q17" value="Si, molto" class="form-radio" required><label for="q17_a" class="ml-2">Sì, molto</label></div>
+                        <div class="flex items-center"><input type="radio" id="q17_b" name="q17" value="Dipende dal gruppo" class="form-radio"><label for="q17_b" class="ml-2">Dipende dal gruppo</label></div>
+                        <div class="flex items-center"><input type="radio" id="q17_c" name="q17" value="Preferisco lavorare da solo" class="form-radio"><label for="q17_c" class="ml-2">Preferisco lavorare da solo</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">18. Hai mai partecipato a gare o concorsi scolastici?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q18_a" name="q18" value="Si, spesso" class="form-radio" required><label for="q18_a" class="ml-2">Sì, spesso</label></div>
+                        <div class="flex items-center"><input type="radio" id="q18_b" name="q18" value="Sì, qualche volta" class="form-radio"><label for="q18_b" class="ml-2">Sì, qualche volta</label></div>
+                        <div class="flex items-center"><input type="radio" id="q18_c" name="q18" value="No, mai" class="form-radio"><label for="q18_c" class="ml-2">No, mai</label></div>
+                        <div class="flex items-center"><input type="radio" id="q18_d" name="q18" value="Non ricordo" class="form-radio"><label for="q18_d" class="ml-2">Non ricordo</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">19. Quale tra questi strumenti musicali ti piacerebbe imparare?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q19_a" name="q19" value="Chitarra" class="form-radio" required><label for="q19_a" class="ml-2">Chitarra</label></div>
+                        <div class="flex items-center"><input type="radio" id="q19_b" name="q19" value="Pianoforte" class="form-radio"><label for="q19_b" class="ml-2">Pianoforte</label></div>
+                        <div class="flex items-center"><input type="radio" id="q19_c" name="q19" value="Violino" class="form-radio"><label for="q19_c" class="ml-2">Violino</label></div>
+                        <div class="flex items-center"><input type="radio" id="q19_d" name="q19" value="Batteria" class="form-radio"><label for="q19_d" class="ml-2">Batteria</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">20. Sei iscritto a gruppi o associazioni extrascolastiche?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q20_a" name="q20" value="Sì, sportive" class="form-radio" required><label for="q20_a" class="ml-2">Sì, sportive</label></div>
+                        <div class="flex items-center"><input type="radio" id="q20_b" name="q20" value="Sì, culturali" class="form-radio"><label for="q20_b" class="ml-2">Sì, culturali</label></div>
+                        <div class="flex items-center"><input type="radio" id="q20_c" name="q20" value="No" class="form-radio"><label for="q20_c" class="ml-2">No</label></div>
+                        <div class="flex items-center"><input type="radio" id="q20_d" name="q20" value="Altro" class="form-radio"><label for="q20_d" class="ml-2">Altro</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">21. Voto in uscita dalle medie?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q21_a" name="q21" value="6" class="form-radio" required><label for="q21_a" class="ml-2">6</label></div>
+                        <div class="flex items-center"><input type="radio" id="q21_b" name="q21" value="7" class="form-radio"><label for="q21_b" class="ml-2">7</label></div>
+                        <div class="flex items-center"><input type="radio" id="q21_c" name="q21" value="8" class="form-radio"><label for="q21_c" class="ml-2">8</label></div>
+                        <div class="flex items-center"><input type="radio" id="q21_d" name="q21" value="9" class="form-radio"><label for="q21_d" class="ml-2">9</label></div>
+                        <div class="flex items-center"><input type="radio" id="q21_e" name="q21" value="10" class="form-radio"><label for="q21_e" class="ml-2">10</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">22. Sei stato/a promosso/a senza debiti?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q22_a" name="q22" value="Sì" class="form-radio" required><label for="q22_a" class="ml-2">Sì</label></div>
+                        <div class="flex items-center"><input type="radio" id="q22_b" name="q22" value="No" class="form-radio"><label for="q22_b" class="ml-2">No</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">23. Qual è la tua serie TV preferita?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q23_a" name="q23" value="Commedia" class="form-radio" required><label for="q23_a" class="ml-2">Commedia</label></div>
+                        <div class="flex items-center"><input type="radio" id="q23_b" name="q23" value="Azione" class="form-radio"><label for="q23_b" class="ml-2">Azione</label></div>
+                        <div class="flex items-center"><input type="radio" id="q23_c" name="q23" value="Thriller" class="form-radio"><label for="q23_c" class="ml-2">Thriller</label></div>
+                        <div class="flex items-center"><input type="radio" id="q23_d" name="q23" value="Documentario" class="form-radio"><label for="q23_d" class="ml-2">Documentario</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">24. Qual è il tuo film preferito?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q24_a" name="q24" value="Avventura" class="form-radio" required><label for="q24_a" class="ml-2">Avventura</label></div>
+                        <div class="flex items-center"><input type="radio" id="q24_b" name="q24" value="Fantascienza" class="form-radio"><label for="q24_b" class="ml-2">Fantascienza</label></div>
+                        <div class="flex items-center"><input type="radio" id="q24_c" name="q24" value="Horror" class="form-radio"><label for="q24_c" class="ml-2">Horror</label></div>
+                        <div class="flex items-center"><input type="radio" id="q24_d" name="q24" value="Drammatico" class="form-radio"><label for="q24_d" class="ml-2">Drammatico</label></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 mb-2">25. Hai un account social media?</p>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center"><input type="radio" id="q25_a" name="q25" value="Sì" class="form-radio" required><label for="q25_a" class="ml-2">Sì</label></div>
+                        <div class="flex items-center"><input type="radio" id="q25_b" name="q25" value="No" class="form-radio"><label for="q25_b" class="ml-2">No</label></div>
+                    </div>
+                </div>
+                <!-- Domande Aperte -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-gray-700 mb-4">Domande Aperte</h3>
+                    <div>
+                        <label for="q26" class="block font-bold text-gray-700">26. Quali sono le tue aspettative per questo anno scolastico?</label>
+                        <textarea id="q26" name="q26" rows="2" class="mt-1 input-text rounded-md" required></textarea>
+                    </div>
+                    <div>
+                        <label for="q27" class="block font-bold text-gray-700">27. Qual è il tuo hobby principale?</label>
+                        <textarea id="q27" name="q27" rows="2" class="mt-1 input-text rounded-md" required></textarea>
+                    </div>
+                    <div>
+                        <label for="q28" class="block font-bold text-gray-700">28. Qual è l'ultimo libro che hai letto?</label>
+                        <textarea id="q28" name="q28" rows="2" class="mt-1 input-text rounded-md" required></textarea>
+                    </div>
+                    <div>
+                        <label for="q29" class="block font-bold text-gray-700">29. Qual è l'ultima app che hai scaricato?</label>
+                        <textarea id="q29" name="q29" rows="2" class="mt-1 input-text rounded-md" required></textarea>
+                    </div>
+                    <div>
+                        <label for="q30" class="block font-bold text-gray-700">30. Quali argomenti ti appassionano al di fuori della scuola?</label>
+                        <textarea id="q30" name="q30" rows="2" class="mt-1 input-text rounded-md" required></textarea>
+                    </div>
+                    <div>
+                        <label for="q31" class="block font-bold text-gray-700">31. Qual è la tua materia preferita?</label>
+                        <textarea id="q31" name="q31" rows="2" class="mt-1 input-text rounded-md" required></textarea>
+                    </div>
+                    <div>
+                        <label for="q32" class="block font-bold text-gray-700">32. Qualche corso ti piacerebbe che fosse attivato a scuola?</label>
+                        <textarea id="q32" name="q32" rows="2" class="mt-1 input-text rounded-md" required></textarea>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mt-6">
+                    <button type="submit" class="btn-primary w-full sm:w-auto">Invia Questionario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Sezione di Login per Docenti -->
+    <div id="teacher-login-section" class="teacher-login w-full max-w-md">
+        <div class="container-card p-6 sm:p-8">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-4 text-center">Accesso Docenti</h2>
+            <p class="text-gray-500 mb-6 text-center">Inserisci le tue credenziali per visualizzare le statistiche.</p>
+            <form id="teacher-login-form" class="space-y-4">
+                <div>
+                    <label for="teacher-nome" class="block text-sm font-medium text-gray-700">Nome</label>
+                    <input type="text" id="teacher-nome" name="nome" class="mt-1 input-text rounded-md" required>
+                </div>
+                <div>
+                    <label for="teacher-cognome" class="block text-sm font-medium text-gray-700">Cognome</label>
+                    <input type="text" id="teacher-cognome" name="cognome" class="mt-1 input-text rounded-md" required>
+                </div>
+                <div>
+                    <label for="teacher-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="teacher-password" class="mt-1 input-text rounded-md" required>
+                    <p class="mt-1 text-xs text-gray-500">Credenziali: Nome: Paolo, Cognome: Bianchi, Password: docente</p>
+                </div>
+                <div class="flex justify-center mt-6">
+                    <button type="submit" class="btn-primary w-full sm:w-auto">Accedi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sezione per le statistiche -->
+    <div id="stats-section" class="stats-container w-full max-w-6xl">
+        <div class="container-card p-6 sm:p-8">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2 text-center">Statistiche e Analisi</h2>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6">
+                <label for="class-select" class="block text-sm font-medium text-gray-700">Seleziona la Classe:</label>
+                <select id="class-select" class="mt-1 input-text w-auto sm:w-48 rounded-md">
+                    <option value="all">Tutte le Classi</option>
+                    <option value="1A">1A</option>
+                    <option value="1B">1B</option>
+                    <option value="1D">1D</option>
+                    <option value="1I">1I</option>
+                    <option value="1L">1L</option>
+                    <option value="1J">1J</option>
+                    <option value="1T">1T</option>
+                    <option value="1V">1V</option>
+                    <option value="1S">1S</option>
+                    <option value="1P">1P</option>
+                    <option value="1N">1N</option>
+                </select>
+            </div>
+        </div>
+        <div id="charts-container" class="space-y-6 mt-8">
+            <!-- Qui verranno inseriti i grafici a torta e le altre statistiche -->
+        </div>
+    </div>
+
+<!-- Script per Firebase e la logica -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script> 
+
+<script>   
+    // Configurazione Firebase reale
+    const firebaseConfig = {
+        apiKey: "AIzaSyBpiLnfMne4GHjGUnQn_4L_NaGkPulFsRE",
+        authDomain: "questionarioaccoglienza-bf55e.firebaseapp.com",
+        projectId: "questionarioaccoglienza-bf55e",
+        storageBucket: "questionarioaccoglienza-bf55e.firebasestorage.app",
+        messagingSenderId: "1012050381590",
+        appId: "1:1012050381590:web:235100c5f3858e606b9e37",
+        measurementId: "G-T0XVFTX1J8"
+    };
+
+    // Inizializzazione Firebase
+    firebase.initializeApp(firebaseConfig);
+    const analytics = firebase.analytics();
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Variabili globali
+    let userId = null;
+    let isAuthReady = false;
+
+    const authPromise = new Promise((resolve, reject) => {
+        // Se vuoi usare un token custom (opzionale)
+        const initialAuthToken = null;
+
+        if (initialAuthToken) {
+            auth.signInWithCustomToken(initialAuthToken)
+                .then((userCredential) => {
+                    userId = userCredential.user.uid;
+                    isAuthReady = true;
+                    console.log("Signed in with custom token. User ID:", userId);
+                    resolve();
+                })
+                .catch((error) => {
+                    console.error("Error signing in with custom token:", error);
+                    auth.signInAnonymously().then((userCredential) => {
+                        userId = userCredential.user.uid;
+                        isAuthReady = true;
+                        console.log("Signed in anonymously. User ID:", userId);
+                        resolve();
+                    });
+                });
+        } else {
+            auth.signInAnonymously()
+                .then((userCredential) => {
+                    userId = userCredential.user.uid;
+                    isAuthReady = true;
+                    console.log("Signed in anonymously. User ID:", userId);
+                    resolve();
+                })
+                .catch((error) => {
+                    console.error("Error signing in anonymously:", error);
+                    reject(error);
+                });
+        }
+    });
+
+        const welcomePage = document.getElementById('welcome-page');
+        const initialPage = document.getElementById('initial-page');
+        const authSection = document.getElementById('auth-section');
+        const surveySection = document.getElementById('survey-section');
+        const teacherLoginSection = document.getElementById('teacher-login-section');
+        const statsSection = document.getElementById('stats-section');
+        const navigationBar = document.getElementById('navigation-bar');
+        const pageTitle = document.getElementById('page-title');
+
+        const startJourneyBtn = document.getElementById('start-journey-btn');
+        const startSurveyBtn = document.getElementById('start-survey-btn');
+        const toggleTeacherLoginBtn = document.getElementById('toggle-teacher-login');
+        const navBackBtn = document.getElementById('nav-back-btn');
+        const authForm = document.getElementById('auth-form');
+        const surveyForm = document.getElementById('survey-form');
+        const teacherLoginForm = document.getElementById('teacher-login-form');
+        const messageBox = document.getElementById('message-box');
+        const classSelect = document.getElementById('class-select');
+        const chartsContainer = document.getElementById('charts-container');
+        
+        const TEACHER_NOME = "Paolo";
+        const TEACHER_COGNOME = "Bianchi";
+        const TEACHER_PASSWORD = "docente"; 
+        const STUDENT_PASSWORD = "studente";
+        let studentData = {};
+        
+        const multipleChoiceQuestions = [
+            { id: "q1", text: "1. Da quale scuola media provieni?", options: ["Scuola media statale", "Scuola privata", "Scuola paritaria"] },
+            { id: "q2", text: "2. Come hai conosciuto l'Istituto Primo Levi?", options: ["Durante gli open day", "Tramite internet", "Attraverso amici o parenti", "Altro"] },
+            { id: "q3", text: "3. Come raggiungi ogni giorno la scuola?", options: ["In autobus", "In auto", "A piedi", "In bicicletta"] },
+            { id: "q4", text: "4. Chi ha scelto l'indirizzo di studio?", options: ["Un insegnante", "Insieme ai genitori", "I miei genitori", "Io stesso/a"] },
+            { id: "q5", text: "5. Perché hai scelto questo indirizzo?", options: ["Perché consigliato", "Per passione", "Per le opportunità lavorative", "Perché vicino a casa"] },
+            { id: "q6", text: "6. Hai partecipato agli Open Day?", options: ["Sì", "No"] },
+            { id: "q7", text: "7. Hai partecipato agli stage di orientamento?", options: ["Sì", "No"] },
+            { id: "q8", text: "8. Quante ore al giorno dedichi allo studio?", options: ["Meno di 1 ora", "1-2 ore", "2-3 ore", "Più di 3 ore"] },
+            { id: "q9", text: "9. Pratichi sport? Se sì, quante volte a settimana?", options: ["Non pratico sport", "1-2 volte a settimana", "3 o più volte a settimana"] },
+            { id: "q10", text: "10. Qual è la tua materia preferita?", options: ["Italiano", "Matematica", "Scienze", "Storia", "Altro"] },
+            { id: "q11", text: "11. Hai un animale domestico?", options: ["Sì", "No"] },
+            { id: "q12", text: "12. Qual è il tuo piatto preferito?", options: ["Pasta", "Pizza", "Carne", "Pesce", "Altro"] },
+            { id: "q13", text: "13. Hai mai vissuto all'estero?", options: ["Solo per vacanza", "Sì, per meno di un anno", "Sì, per più di un anno", "No, mai"] },
+            { id: "q14", text: "14. Hai bisogno di supporto per lo studio?", options: ["Sì, sempre", "Qualche volta", "Raramente", "Mai"] },
+            { id: "q15", text: "15. Usi spesso il computer per studiare?", options: ["Sì, sempre", "Solo per alcune materie", "Raramente", "Mai"] },
+            { id: "q16", text: "16. Qual è il tuo colore preferito?", options: ["Blu", "Rosso", "Giallo", "Verde"] },
+            { id: "q17", text: "17. Ti piace lavorare in gruppo?", options: ["Sì, molto", "Dipende dal gruppo", "Preferisco lavorare da solo"] },
+            { id: "q18", text: "18. Hai mai partecipato a gare o concorsi scolastici?", options: ["Sì, spesso", "Sì, qualche volta", "No, mai", "Non ricordo"] },
+            { id: "q19", text: "19. Quale tra questi strumenti musicali ti piacerebbe imparare?", options: ["Chitarra", "Pianoforte", "Violino", "Batteria"] },
+            { id: "q20", text: "20. Sei iscritto a gruppi o associazioni extrascolastiche?", options: ["Sì, sportive", "Sì, culturali", "No", "Altro"] },
+            { id: "q21", text: "21. Voto in uscita dalle medie?", options: ["6", "7", "8", "9", "10"] },
+            { id: "q22", text: "22. Sei stato/a promosso/a senza debiti?", options: ["Sì", "No"] },
+            { id: "q23", text: "23. Qual è la tua serie TV preferita?", options: ["Commedia", "Azione", "Thriller", "Documentario"] },
+            { id: "q24", text: "24. Qual è il tuo film preferito?", options: ["Avventura", "Fantascienza", "Horror", "Drammatico"] },
+            { id: "q25", text: "25. Hai un account social media?", options: ["Sì", "No"] }
+        ];
+        
+        const openQuestions = [
+            { id: "q26", text: "26. Quali sono le tue aspettative per questo anno scolastico?" },
+            { id: "q27", text: "27. Qual è il tuo hobby principale?" },
+            { id: "q28", text: "28. Qual è l'ultimo libro che hai letto?" },
+            { id: "q29", text: "29. Qual è l'ultima app che hai scaricato?" },
+            { id: "q30", text: "30. Quali argomenti ti appassionano al di fuori della scuola?" },
+            { id: "q31", text: "31. Qual è la tua materia preferita?" },
+            { id: "q32", text: "32. Qualche corso ti piacerebbe che fosse attivato a scuola?" },
+        ];
+        
+        const chartInstances = {};
+
+        function showMessage(message, type = 'info') {
+            messageBox.textContent = message;
+            messageBox.style.backgroundColor = type === 'success' ? '#10b981' : (type === 'error' ? '#ef4444' : '#f59e0b');
+            messageBox.classList.add('show');
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 4000);
+        }
+
+        function navigateTo(pageId) {
+            initialPage.style.display = 'none';
+            authSection.style.display = 'none';
+            surveySection.style.display = 'none';
+            teacherLoginSection.style.display = 'none';
+            statsSection.style.display = 'none';
+            navigationBar.style.display = 'none';
+            welcomePage.style.display = 'none';
+            
+            let title = '';
+
+            switch(pageId) {
+                case 'welcome':
+                    welcomePage.style.display = 'flex';
+                    break;
+                case 'initial':
+                    initialPage.style.display = 'flex';
+                    break;
+                case 'auth':
+                    authSection.style.display = 'flex';
+                    navigationBar.style.display = 'flex';
+                    title = "Accesso Studenti";
+                    break;
+                case 'survey':
+                    surveySection.style.display = 'flex';
+                    navigationBar.style.display = 'flex';
+                    title = "Compila Questionario";
+                    break;
+                case 'teacher-login':
+                    teacherLoginSection.style.display = 'flex';
+                    navigationBar.style.display = 'flex';
+                    title = "Accesso Docenti";
+                    break;
+                case 'stats':
+                    statsSection.style.display = 'flex';
+                    navigationBar.style.display = 'flex';
+                    title = "Statistiche e Analisi";
+                    break;
+            }
+            pageTitle.textContent = title;
+            window.scrollTo(0, 0);
+        }
+
+        startJourneyBtn.addEventListener('click', () => {
+            welcomePage.style.opacity = '0';
+            setTimeout(() => {
+                welcomePage.style.display = 'none';
+                navigateTo('initial');
+            }, 800);
+        });
+
+        // Event Listeners for Navigation
+        startSurveyBtn.addEventListener('click', () => navigateTo('auth'));
+        toggleTeacherLoginBtn.addEventListener('click', () => navigateTo('teacher-login'));
+        navBackBtn.addEventListener('click', () => {
+            if (statsSection.style.display === 'flex') {
+                navigateTo('initial');
+            } else if (teacherLoginSection.style.display === 'flex') {
+                navigateTo('initial');
+            } else {
+                navigateTo('initial');
+            }
+        });
+        
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await authPromise;
+            const nome = document.getElementById('auth-nome').value.trim();
+            const cognome = document.getElementById('auth-cognome').value.trim();
+            const classe = document.getElementById('auth-classe').value.trim();
+            const password = document.getElementById('auth-password').value.trim();
+
+            if (!nome || !cognome || !classe || !password) {
+                showMessage("Per favore, inserisci tutti i campi.", 'error');
+                return;
+            }
+            if (password !== STUDENT_PASSWORD) {
+                showMessage("Password errata. Riprova.", 'error');
+                return;
+            }
+
+            studentData = { nome, cognome, classe };
+
+            try {
+                const resultsCollection = collection(db, `artifacts/${appId}/public/data/questionario-risultati`);
+                const q = query(resultsCollection, 
+                    where('nome', '==', nome),
+                    where('cognome', '==', cognome),
+                    where('classe', '==', classe),
+                    limit(1)
+                );
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.docs.length > 0) {
+                    showMessage("Hai già compilato il questionario. Verranno visualizzate le statistiche della tua classe.", 'info');
+                    navigateTo('stats');
+                    updateCharts(classe);
+                } else {
+                    navigateTo('survey');
+                }
+            } catch (error) {
+                console.error("Errore nel controllo delle credenziali: ", error);
+                showMessage("Errore. Riprova più tardi.", 'error');
+            }
+        });
+
+        surveyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await authPromise;
+            const formData = new FormData(surveyForm);
+            const data = {
+                nome: studentData.nome,
+                cognome: studentData.cognome,
+                classe: studentData.classe,
+                timestamp: new Date()
+            };
+
+            multipleChoiceQuestions.forEach(q => {
+                data[q.id] = formData.get(q.id);
+            });
+            openQuestions.forEach(q => {
+                data[q.id] = formData.get(q.id);
+            });
+
+            try {
+                const resultsCollection = collection(db, `artifacts/${appId}/public/data/questionario-risultati`);
+                await addDoc(resultsCollection, data);
+                showMessage("Questionario inviato con successo! Ora puoi visualizzare le statistiche.", 'success');
+                navigateTo('stats');
+                updateCharts(studentData.classe);
+            } catch (error) {
+                console.error("Errore nell'invio del questionario: ", error);
+                showMessage("Errore nell'invio. Riprova più tardi.", 'error');
+            }
+        });
+
+        teacherLoginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await authPromise;
+            const nome = document.getElementById('teacher-nome').value.trim();
+            const cognome = document.getElementById('teacher-cognome').value.trim();
+            const password = document.getElementById('teacher-password').value.trim();
+            
+            if (nome === TEACHER_NOME && cognome === TEACHER_COGNOME && password === TEACHER_PASSWORD) {
+                showMessage("Accesso docenti riuscito.", 'success');
+                navigateTo('stats');
+                updateCharts('all');
+            } else {
+                showMessage("Credenziali errate. Riprova.", 'error');
+            }
+        });
+
+        classSelect.addEventListener('change', () => {
+            updateCharts(classSelect.value);
+        });
+        
+        function getChartColors() {
+            const colors = [
+                '#a78bfa', '#818cf8', '#3b82f6', '#60a5fa', '#f87171', '#fbbf24', '#34d399', '#6ee7b7',
+                '#93c5fd', '#c4b5fd', '#d8b4fe', '#f9a8d4', '#fda4af', '#fca5a5'
+            ];
+            const lightColors = colors.map(c => c + '80'); // 50% opacity for background
+            const borderColors = colors;
+            return { lightColors, borderColors };
+        }
+
+        async function updateCharts(classe) {
+            await authPromise;
+            const collectionRef = collection(db, `artifacts/${appId}/public/data/questionario-risultati`);
+            let q = collectionRef;
+            if (classe !== 'all') {
+                q = query(collectionRef, where('classe', '==', classe));
+            }
+
+            let snapshots;
+            try {
+                snapshots = await getDocs(q);
+            } catch (error) {
+                console.error("Errore nel recupero dei dati: ", error);
+                showMessage("Errore nel recupero dei dati. Controlla la console.", 'error');
+                return;
+            }
+
+            const results = snapshots.docs.map(doc => doc.data());
+            
+            for (const chartId in chartInstances) {
+                if (chartInstances[chartId]) {
+                    chartInstances[chartId].destroy();
+                }
+            }
+            chartsContainer.innerHTML = '';
+            
+            // Grafici a torta per le domande a scelta multipla
+            const chartColors = getChartColors();
+            const pieChartContainer = document.createElement('div');
+            pieChartContainer.className = 'pie-chart-container';
+            chartsContainer.appendChild(pieChartContainer);
+
+            multipleChoiceQuestions.forEach((qData, index) => {
+                const counts = {};
+                qData.options.forEach(option => counts[option] = 0);
+                
+                results.forEach(result => {
+                    const answer = result[qData.id];
+                    if (answer && counts.hasOwnProperty(answer)) {
+                        counts[answer]++;
+                    }
+                });
+
+                const chartWrapper = document.createElement('div');
+                chartWrapper.className = 'pie-chart-wrapper container-card p-6';
+                chartWrapper.innerHTML = `<h3 class="text-lg font-bold text-gray-800 text-center mb-4">${qData.text}</h3><canvas id="chart-${qData.id}"></canvas>`;
+                pieChartContainer.appendChild(chartWrapper);
+
+                const ctx = document.getElementById(`chart-${qData.id}`).getContext('2d');
+                chartInstances[`chart-${qData.id}`] = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(counts),
+                        datasets: [{
+                            data: Object.values(counts),
+                            backgroundColor: chartColors.lightColors,
+                            borderColor: chartColors.borderColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.parsed || 0;
+                                        const total = context.dataset.data.reduce((sum, current) => sum + current, 0);
+                                        const percentage = total > 0 ? ((value / total) * 100).toFixed(2) : 0;
+                                        return `${label}: ${value} (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Statistiche per le domande aperte (nuova sezione)
+            const openQuestionsContainer = document.createElement('div');
+            openQuestionsContainer.className = 'container-card p-6 mt-8';
+            openQuestionsContainer.innerHTML = `
+                <h3 class="text-xl sm:text-2xl font-extrabold text-gray-800 mb-4 text-center">Analisi Domande Aperte</h3>
+                <div id="open-questions-list" class="space-y-6"></div>
+            `;
+            chartsContainer.appendChild(openQuestionsContainer);
+
+            const openQuestionsList = document.getElementById('open-questions-list');
+            openQuestions.forEach(qData => {
+                const answers = results.map(r => r[qData.id]).filter(a => a && a.trim() !== '');
+                const answersHtml = answers.length > 0
+                    ? answers.map(a => `<li class="p-2 bg-gray-100 rounded-lg shadow-sm">${a}</li>`).join('')
+                    : `<li class="p-2 text-gray-500">Nessuna risposta disponibile.</li>`;
+
+                const questionBlock = document.createElement('div');
+                questionBlock.className = 'mb-4';
+                questionBlock.innerHTML = `
+                    <p class="font-bold text-gray-700 mb-2">${qData.text} (${answers.length} risposte)</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        ${answersHtml}
+                    </ul>
+                `;
+                openQuestionsList.appendChild(questionBlock);
+            });
+        }
+    </script>
+</body>
+</html>
