@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sito Accoglienza - TSGC Primo Levi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .container {
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1.5rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba (0, 0, 0, 0.1);
+            padding: 2rem;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            animation: fadeIn 1s ease-out forwards;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .animated-heading {
+            animation: slideInFromLeft 1s ease-out forwards;
+            opacity: 0;
+            animation-delay: 0.2s;
+        }
+        .animated-text {
+            animation: fadeIn 1.5s ease-out forwards;
+            opacity: 0;
+            animation-delay: 0.8s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .emoji {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+        .button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col justify-between">
+
+    <div class="container my-8 flex-grow">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-blue-900 leading-tight animated-heading">
+                <span class="emoji">🏫</span> Funzione Accoglienza
+            </h1>
+            <p class="text-base sm:text-lg text-gray-600 mt-2 animated-heading" style="animation-delay: 0.4s;">
+                Il tuo portale per i dati delle nuove classi <span class="emoji">🎓</span>
+            </p>
+        </header>
+
+        <main class="space-y-8">
+            <!-- Testo Descrittivo e Dettagliato -->
+            <div class="card animated-text">
+                <h3 class="text-2xl font-bold mb-4 text-blue-800">Missione e Obiettivi</h3>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    Questo sito web dinamico è stato scrupolosamente progettato dalla Funzione Accoglienza per essere uno strumento fondamentale nella gestione delle nuove classi. La sua missione è quella di centralizzare, visualizzare e rendere facilmente accessibili i dati cruciali per un'accoglienza efficace e personalizzata. L'obiettivo primario è fornire a coordinatori di classe, docenti e a tutto il personale interessato una risorsa intuitiva e dettagliata, che consenta di comprendere a colpo d'occhio la composizione dei nuovi gruppi e di preparare al meglio il percorso didattico e formativo.
+                </p>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    Attraverso la visualizzazione grafica, i dati diventano immediatamente comprensibili. Ogni grafico rappresenta un'analisi rigorosa e puntuale delle informazioni raccolte, trasformandole da semplici numeri in un quadro significativo. Questo approccio basato sull'elaborazione dei dati permette una pianificazione più mirata e una distribuzione delle risorse più efficiente, garantendo che ogni classe riceva l'attenzione e il supporto adeguati sin dal primo giorno.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    Il sistema è stato inizializzato per funzionare come una piattaforma evolutiva, che può essere aggiornata con nuovi dati e collegata ad altre pagine HTML per espandere le sue funzionalità. La sua interfaccia pulita e moderna, arricchita da elementi visivi e animazioni, riflette l'impegno della nostra scuola verso l'innovazione e l'eccellenza.
+                </p>
+            </div>
+
+            <!-- Sezione Grafica e Dati a Larghezza Completa -->
+            <div class="card animated-text" style="animation-delay: 1.2s;">
+                <h3 class="text-2xl font-bold mb-4 text-blue-800 text-center">Ripartizione delle Classi</h3>
+                <div class="flex flex-col items-center justify-center space-y-4">
+                    <canvas id="classChart" class="w-full h-auto"></canvas>
+                    <div class="flex flex-wrap justify-center gap-4 text-center mt-4">
+                        <div class="flex flex-col items-center">
+                            <span class="emoji">🎓</span>
+                            <span class="text-xs font-semibold mt-1">Liceo Scientifico</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="emoji">🧵</span>
+                            <span class="text-xs font-semibold mt-1">Sistema Moda</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="emoji">💼</span>
+                            <span class="text-xs font-semibold mt-1">Amm. Finanziaria</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="emoji">🏗️</span>
+                            <span class="text-xs font-semibold mt-1">Costruzione/Ambiente</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="emoji">🚢</span>
+                            <span class="text-xs font-semibold mt-1">Trasporti/Logistica</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Collegamenti alle Pagine Future -->
+            <section class="mt-8">
+                <div class="card animated-text" style="animation-delay: 1.6s;">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-800 text-center">Pagine Dettaglio per Classe</h3>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        Questa sezione è stata elaborata con meticolosa attenzione per fornire un accesso diretto e organizzato a tutte le informazioni raccolte, suddivise per ogni singola classe prima. L'obiettivo è centralizzare ogni dato rilevante, dalle statistiche generali ai commenti specifici, in un formato che sia immediatamente fruibile. Ogni collegamento è un passo verso una visione completa e dettagliata, permettendo ai coordinatori e ai docenti di navigare agilmente tra le risorse essenziali per la loro attività. È uno strumento indispensabile per la Funzione Accoglienza, che garantisce un flusso informativo chiaro e strutturato.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Elenco Dettagliato delle Classi -->
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <p class="font-bold text-lg mb-2">1ª A Sistema Moda</p>
+                            <a href="https://docs.google.com/spreadsheets/d/1XXjX-G-Yft_ik08-vR7DsmNHbYHJ5iR3/edit?usp=sharing&ouid=117225678172177111207&rtpof=true&sd=true" class="inline-block bg-blue-500 hover:bg-blue-600 text-white button mb-2 transition duration-300">Dati raccolti- Serve Mail Istituzionale</a>
+                            <a href="1A.html" class="inline-block bg-purple-500 hover:bg-purple-600 text-white button mt-2 transition duration-300">Grafici e Commenti</a>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <p class="font-bold text-lg mb-2">1ª B Sistema Moda</p>
+                            <a href="https://docs.google.com/spreadsheets/d/1HEFMOVJrdL8AhBs2iAIQo-xDrpDEpIKA/edit?usp=sharing&ouid=117225678172177111207&rtpof=true&sd=true" class="inline-block bg-blue-500 hover:bg-blue-600 text-white button mb-2 transition duration-300">Dati raccolti- Serve Mail Istituzionale</a>
+                            <a href="1B.html" class="inline-block bg-purple-500 hover:bg-purple-600 text-white button mt-2 transition duration-300">Grafici e Commenti</a>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <p class="font-bold text-lg mb-2">1ª D Trasporti e Logistica</p>
+                            <a href="https://docs.google.com/spreadsheets/d/1R10hI-KfPvwuGP4K03OR8JOMzXcuwAiq/edit?usp=sharing&ouid=117225678172177111207&rtpof=true&sd=true" class="inline-block bg-blue-500 hover:bg-blue-600 text-white button mb-2 transition duration-300">Dati raccolti- Serve Mail Istituzionale</a>
+                            <a href="1D.html" class="inline-block bg-purple-500 hover:bg-purple-600 text-white button mt-2 transition duration-300">Grafici e Commenti</a>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <p class="font-bold text-lg mb-2">1ª I Liceo Scientifico Opzione Scienze Applicate</p>
+                            <a href="https://docs.google.com/spreadsheets/d/1A4mvhcmwpFcp2WRZWEUPJZ2vjXNsL19u/edit?usp=sharing&ouid=117225678172177111207&rtpof=true&sd=true" class="inline-block bg-blue-500 hover:bg-blue-600 text-white button mb-2 transition duration-300">Dati raccolti- Serve Mail Istituzionale</a>
+                            <a href="1I.html" class="inline-block bg-purple-500 hover:bg-purple-600 text-white button mt-2 transition duration-300">Grafici e Commenti</a>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <p class="font-bold text-lg mb-2">1ª J Amministrazione Finanza e Marketing</p>
+                            <a href="https://docs.google.com/spreadsheets/d/1HsYdk7duBeSZYkRb_vm3HXHtbmYnSwZV/edit?usp=sharing&ouid=117225678172177111207&rtpof=true&sd=true" class="inline-block bg-blue-500 hover:bg-blue-600 text-white button mb-2 transition duration-300">Dati raccolti- Serve Mail Istituzionale</a>
+                            <a href="1J.html" class="inline-block bg-purple-500 hover:bg-purple-600 text-white button mt-2 transition duration-300">Grafici e Commenti</a>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <p class="font-bold text-lg mb-2">1ª L Liceo Scientifico Opzione Scienze Applicate</p>
+                            <a href="https://docs.google.com/spreadsheets/d/1tsSxzljVDBJlYwE2wN9nyzqvbkGooEf4/edit?usp=sharing&ouid=117225678172177111207&rtpof=true&sd=true" class="inline-block bg-blue-500 hover:bg-blue-600 text-white button mb-2 transition duration-300">Dati raccolti- Serve Mail Istituzionale</a>
+                            <a href="1L.html" class="inline-block bg-purple-500 hover:bg-purple-600 text-white button mt-2 transition duration-300">Grafici e Commenti</a>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <p class="font-bold text-lg mb-2">1ª N Costruzioni Ambiente e Territorio</p>
+                            <a href="https://docs.google.com/spreadsheets/d/1AFLYFJwjKjpWyu2hjk5g61niPemTYxsz/edit?usp=sharing&ouid=117225678172177111207&rtpof=true&sd=true" class="inline-block bg-blue-500 hover:bg-blue-600 text-white button mb-2 transition duration-300">Dati raccolti- Serve Mail Istituzionale</a>
+                            <a href="1N.html" class="inline-block bg-purple-500 hover:bg-purple-600 text-white button mt-2 transition duration-300">Grafici e Commenti</a>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <p class="font-bold text-lg mb-2">1ª P Costruzione Ambiente e Territorio</p>
+                            <a hrefhttps://docs.google.com/spreadsheets/d/1AQ3K7Rh8SSoDO_v5rHN-9d2Ya861etGQ/edit?usp=sharing&ouid=117225678172177111207&rtpof=true&sd=true" class="inline-block bg-blue-500 hover:bg-blue-600 text-white button mb-2 transition duration-300">Dati raccolti- Serve Mail Istituzionale</a>
+                            <a href="1P.html" class="inline-block bg-purple-500 hover:bg-purple-600 text-white button mt-2 transition duration-300">Grafici e Commenti</a>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <p class="font-bold text-lg mb-2">1ª S Amministrazione Finanziaria Marketing</p>
+                            <a href="https://docs.google.com/spreadsheets/d/1UsN73obOboZRFRjsidkCy9rHe3j9STR-/edit?usp=sharing&ouid=117225678172177111207&rtpof=true&sd=true" class="inline-block bg-blue-500 hover:bg-blue-600 text-white button mb-2 transition duration-300">Dati raccolti- Serve Mail Istituzionale</a>
+                            <a href="1S.html" class="inline-block bg-purple-500 hover:bg-purple-600 text-white button mt-2 transition duration-300">Grafici e Commenti</a>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <p class="font-bold text-lg mb-2">1ª T Amministrazione Finanziaria Marketing</p>
+                            <a href="https://docs.google.com/spreadsheets/d/1FvQALfPsQVXYDGAPMR50YGj2bi9vbcDP/edit?usp=sharing&ouid=117225678172177111207&rtpof=true&sd=true" class="inline-block bg-blue-500 hover:bg-blue-600 text-white button mb-2 transition duration-300">Dati raccolti- Serve Mail Istituzionale</a>
+                            <a href="1T.html" class="inline-block bg-purple-500 hover:bg-purple-600 text-white button mt-2 transition duration-300">Grafici e Commenti </a>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <p class="font-bold text-lg mb-2">1ª V Amministrazione Finanza e Marketing</p>
+                            <a href="https://docs.google.com/spreadsheets/d/1iEkECK6rArRdQCRgpi3bRPhGpiUcG2rA/edit?usp=sharing&ouid=117225678172177111207&rtpof=true&sd=true" class="inline-block bg-blue-500 hover:bg-blue-600 text-white button mb-2 transition duration-300">Dati raccolti- Serve Mail Istituzionale</a>
+                            <a href="1V.html" class="inline-block bg-purple-500 hover:bg-purple-600 text-white button mt-2 transition duration-300">Grafici e Commenti</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nuova sezione Grafici, Commenti e Suggerimenti -->
+            <section class="mt-8">
+                <div class="card animated-text" style="animation-delay: 2s;">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-800 text-center">Grafici, Commenti e Suggerimenti</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Questa sezione è dedicata all'analisi approfondita dei dati raccolti. Qui, coordinatori e docenti possono trovare grafici dettagliati, commenti specifici sulle dinamiche delle classi e suggerimenti pratici per ottimizzare l'accoglienza. L'obiettivo è trasformare i dati grezzi in strumenti di lavoro concreti, facilitando la collaborazione e garantendo che ogni studente abbia il supporto necessario per un percorso di successo.
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <footer class="w-full text-center text-gray-500 text-sm mt-8 py-6 border-t border-gray-200">
+        <p class="text-base font-semibold text-gray-700">TSGC Primo Levi di Seregno</p>
+        <p class="text-sm mt-1">Tutti i diritti riservati - Funzione Accoglienza</p>
+    </footer>
+
+    <script>
+        // Registrazione del plugin per i datalabels
+        Chart.register(ChartDataLabels);
+        
+        // Funzione per generare colori casuali per il grafico
+        const generateColors = (num) => {
+            const colors = [];
+            for (let i = 0; i < num; i++) {
+                const hue = (i * 137.5) % 360; // Numero aureo per colori distribuiti
+                colors.push(`hsl(${hue}, 70%, 50%)`);
+            }
+            return colors;
+        };
+
+        // Dati aggiornati sulle classi in base alla nuova richiesta
+        const classData = {
+            'Sistema Moda': 2,
+            'Trasporti e Logistica': 1,
+            'Liceo Scientifico Opzione Scienze Applicate': 2,
+            'Amm. Finanza e Marketing': 4,
+            'Costruzioni Ambiente e Territorio': 2,
+        };
+
+        const labels = Object.keys(classData);
+        const dataValues = Object.values(classData);
+        const backgroundColors = generateColors(dataValues.length);
+
+        // Configurazione del grafico a torta
+        const config = {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Numero di Classi',
+                    data: dataValues,
+                    backgroundColor: backgroundColors,
+                    hoverOffset: 8,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                family: 'Inter',
+                                size: 14,
+                            },
+                        },
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + ' classi';
+                                }
+                                return label;
+                            }
+                        }
+                    },
+                    datalabels: {
+                        color: '#fff',
+                        formatter: (value, context) => {
+                            const total = context.chart.data.datasets[0].data.reduce((acc, curr) => acc + curr, 0);
+                            const percentage = ((value / total) * 100).toFixed(1) + '%';
+                            return percentage;
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 14,
+                        },
+                    },
+                    title: {
+                        display: true,
+                        text: 'Distribuzione delle Classi per Indirizzo',
+                        font: {
+                            size: 18,
+                            family: 'Inter',
+                        },
+                        padding: {
+                            bottom: 20,
+                        },
+                    },
+                },
+            }
+        };
+
+        // Renderizza il grafico quando il DOM è pronto
+        window.onload = function() {
+            const ctx = document.getElementById('classChart').getContext('2d');
+            new Chart(ctx, config);
+        };
+    </script>
+</body>
+</html>

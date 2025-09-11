@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisi Completa Questionario - 1B - Istituto Primo Levi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e3f2fd, #b3e5fc);
+            color: #1a202c;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://placehold.co/1920x1080/e6f6ff/e6f6ff?text=+') no-repeat center center/cover;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        .container {
+            max-width: 1024px;
+        }
+        .header {
+            background-color: #fff;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.7);
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .question-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2c5282;
+        }
+        .analysis-text {
+            color: #4a5568;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        .footer {
+            background-color: #1a365d;
+            color: #fff;
+        }
+        .footer a {
+            color: #90cdf4;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .section-divider {
+            height: 1rem;
+            background-color: #a0c4ff;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <!-- Sezione Header -->
+    <header class="header sticky top-0 z-50 p-4 rounded-b-xl shadow-md">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center text-center sm:text-left">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-blue-900 mb-2 sm:mb-0">Istituto Tecnico Primo Levi</h1>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-700">Analisi 1B - Sistema Moda</h2>
+        </div>
+    </header>
+
+    <!-- Contenuto Principale -->
+    <main class="container mx-auto my-8">
+        <!-- Introduzione -->
+        <section class="card p-6 mb-8 text-center">
+            <h3 class="text-3xl font-extrabold mb-4 text-blue-800">Benvenuti all'analisi completa del questionario di accoglienza</h3>
+            <p class="text-lg text-gray-700">
+                Questa analisi offre una panoramica dettagliata delle risposte fornite dalla classe 1B. Utilizzando dati e grafici, esploriamo le motivazioni, le abitudini e gli interessi degli studenti per supportare al meglio il loro percorso.
+            </p>
+        </section>
+
+        <!-- Informazioni personali e background scolastico -->
+        <h3 class="text-2xl font-bold text-blue-800 mt-12 mb-4">1. Informazioni personali e background scolastico</h3>
+        <div class="section-divider"></div>
+        <section id="personal-info" class="grid gap-8 sm:grid-cols-1 lg:grid-cols-2">
+            <!-- Le domande saranno aggiunte dinamicamente qui -->
+        </section>
+
+        <!-- Motivazioni e scelte scolastiche -->
+        <h3 class="text-2xl font-bold text-blue-800 mt-12 mb-4">2. Motivazioni e scelte scolastiche</h3>
+        <div class="section-divider"></div>
+        <section id="motivations" class="grid gap-8 sm:grid-cols-1 lg:grid-cols-2">
+            <!-- Le domande saranno aggiunte dinamicamente qui -->
+        </section>
+
+        <!-- Abitudini di studio e autonomia -->
+        <h3 class="text-2xl font-bold text-blue-800 mt-12 mb-4">3. Abitudini di studio e autonomia</h3>
+        <div class="section-divider"></div>
+        <section id="study-habits" class="grid gap-8 sm:grid-cols-1 lg:grid-cols-2">
+            <!-- Le domande saranno aggiunte dinamicamente qui -->
+        </section>
+
+        <!-- Interessi, sport e tempo libero -->
+        <h3 class="text-2xl font-bold text-blue-800 mt-12 mb-4">4. Interessi, sport e tempo libero</h3>
+        <div class="section-divider"></div>
+        <section id="interests" class="grid gap-8 sm:grid-cols-1 lg:grid-cols-2">
+            <!-- Le domande saranno aggiunte dinamicamente qui -->
+        </section>
+
+        <!-- Esperienze e curiosità -->
+        <h3 class="text-2xl font-bold text-blue-800 mt-12 mb-4">5. Esperienze e curiosità</h3>
+        <div class="section-divider"></div>
+        <section id="curiosity" class="grid gap-8 sm:grid-cols-1 lg:grid-cols-2">
+            <!-- Le domande saranno aggiunte dinamicamente qui -->
+        </section>
+
+    </main>
+
+    <!-- Sezione Footer -->
+    <footer class="footer p-6 mt-8 rounded-t-xl text-center shadow-inner">
+        <p class="mb-2">Istituto Tecnico Primo Levi di Seregno - Produzione riservata</p>
+        <p>
+            <a href="#" class="hover:underline">Contatti</a> |
+            <a href="#" class="hover:underline">Privacy Policy</a>
+        </p>
+    </footer>
+
+    <script>
+        // Dati delle domande e delle risposte del questionario
+        const questionData = {
+            // Sezione 1: Informazioni personali e background scolastico
+            'q3': {
+                section: 'personal-info',
+                question: "Da quale scuola media provieni?",
+                labels: ["Giovanni Verga - Cermenate", "Antona Traversi - Meda", "Leonardo da Vinci - Seveso", "Don Bosco - Costa Masnaga", "Tommaso Grossi - Varedo"],
+                data: [3, 2, 2, 1, 1],
+                type: 'pie',
+                analysis: "L'analisi della provenienza degli studenti rivela una distribuzione geografica variegata, con una netta prevalenza da 'Giovanni Verga - Cermenate'. Questo dato suggerisce l'efficacia delle attività di orientamento in specifiche aree del territorio, evidenziando al contempo la capacità della scuola di attrarre studenti anche da comuni limitrofi. La diversità delle scuole di provenienza contribuisce a creare un ambiente classe eterogeneo e ricco di prospettive differenti."
+            },
+            'q5': {
+                section: 'personal-info',
+                question: "Qual era il tuo voto di uscita dalle scuole medie?",
+                labels: ["6", "7-8", "9-10"],
+                data: [1, 6, 2],
+                type: 'pie',
+                analysis: "La maggior parte degli studenti ha concluso il percorso delle scuole medie con una valutazione positiva, prevalentemente tra 7 e 8. Una parte significativa ha ottenuto anche un voto tra 9 e 10. Questo indica un solido background accademico per la classe."
+            },
+
+            // Sezione 2: Motivazioni e scelte scolastiche
+            'q6': {
+                section: 'motivations',
+                question: "Come hai conosciuto l’Istituto Primo Levi?",
+                labels: ["Docenti/scuola", "Ricerca on-line", "Parenti/amici", "Pubblicità"],
+                data: [3, 4, 1, 1],
+                type: 'pie',
+                analysis: "Il passaparola e le informazioni dirette da docenti e scuola si rivelano il canale principale attraverso cui gli studenti hanno conosciuto l'Istituto. Anche la ricerca online gioca un ruolo fondamentale, dimostrando l'importanza di una presenza digitale chiara e accessibile per l'orientamento."
+            },
+            'q7': {
+                section: 'motivations',
+                question: "Quale è stato il consiglio orientativo?",
+                labels: ["Tecnico", "Professionale", "Liceo"],
+                data: [6, 2, 1],
+                type: 'pie',
+                analysis: "Il consiglio orientativo ricevuto dagli studenti delle scuole medie si è concentrato prevalentemente sull'indirizzo tecnico. Questo conferma che l'offerta formativa dell'istituto è percepita come una scelta coerente con le attitudini e gli interessi espressi dagli studenti durante il percorso di orientamento."
+            },
+            'q8': {
+                section: 'motivations',
+                question: "Hai partecipato agli open day della scuola?",
+                labels: ["Sì, ad uno", "Sì, a più di uno", "No, non ho trovato posto", "No, non mi interessavano"],
+                data: [6, 2, 1, 0],
+                type: 'pie',
+                analysis: "La partecipazione agli open day è stata elevata, con la maggioranza degli studenti che ha frequentato almeno un evento. Questo dimostra l'efficacia delle iniziative di orientamento dell'Istituto e l'interesse degli studenti nel conoscere a fondo l'offerta formativa."
+            },
+            'q9': {
+                section: 'motivations',
+                question: "Hai partecipato allo stage organizzato in questa scuola?",
+                labels: ["Sì", "No", "Non mi interessavano"],
+                data: [6, 2, 1],
+                type: 'pie',
+                analysis: "La partecipazione allo stage è stata significativa, con la maggior parte degli studenti che ha avuto modo di vivere un'esperienza diretta all'interno dell'Istituto. Questo dato evidenzia l'importanza del contatto pratico con l'ambiente scolastico e le attività didattiche."
+            },
+            'q10': {
+                section: 'motivations',
+                question: "Come hai trovato le presentazioni dei nostri indirizzi durante gli open day?",
+                labels: ["Interessanti, chiare e comprensibili", "Noiose e incomprensibili", "Non saprei"],
+                data: [7, 1, 1],
+                type: 'pie',
+                analysis: "Il feedback sulle presentazioni degli indirizzi è estremamente positivo, con una schiacciante maggioranza di risposte che le definisce 'interessanti, chiare e comprensibili'. Ciò sottolinea l'efficacia della comunicazione e la professionalità del corpo docente e degli studenti coinvolti."
+            },
+            'q11': {
+                section: 'motivations',
+                question: "Se hai partecipato ai nostri eventi, cosa ti ha colpito in particolare?",
+                labels: ["Laboratori e Progetti", "Chiarezza e Spiegazioni", "Ambiente e Accoglienza", "Docenti", "Organizzazione"],
+                data: [4, 2, 2, 1, 2],
+                type: 'bar',
+                analysis: "Gli aspetti più apprezzati durante gli open day sono stati la possibilità di partecipare a laboratori e progetti pratici, seguiti dalla chiarezza delle spiegazioni e dalla positività dell'ambiente scolastico. Questo dato sottolinea come l'esperienza diretta e la comunicazione efficace siano fattori decisivi nella scelta degli studenti."
+            },
+            'q12': {
+                section: 'motivations',
+                question: "Se hai partecipato ai nostri eventi, cosa non ti è piaciuto o consigli di migliorare?",
+                labels: ["Docenti", "Organizzazione", "Niente", "Altro"],
+                data: [1, 1, 7, 2],
+                type: 'bar',
+                analysis: "La maggior parte degli studenti ha risposto 'niente', indicando un alto livello di soddisfazione per gli eventi di orientamento. Le poche critiche riguardano aspetti minori, come l'organizzazione e la possibilità di conoscere più docenti, fornendo spunti utili per migliorare le future iniziative."
+            },
+            'q13': {
+                section: 'motivations',
+                question: "Chi ha scelto l’indirizzo di studio che frequenti?",
+                labels: ["Io stesso/a", "Insieme ai genitori", "Un insegnante", "I miei genitori"],
+                data: [6, 3, 1, 0],
+                type: 'pie',
+                analysis: "La scelta dell'indirizzo di studio è stata principalmente autonoma per la maggior parte degli studenti, anche se con un contributo significativo da parte dei genitori. Questo equilibrio tra autonomia e supporto familiare è un indicatore di maturità e consapevolezza."
+            },
+            'q14': {
+                section: 'motivations',
+                question: "Perché hai scelto questo indirizzo di studio?",
+                labels: ["Per passione", "Per le opportunità lavorative", "Perché mi è piaciuto l'istituto", "Ho seguito un mio amico/a", "Perché consigliato"],
+                data: [4, 3, 1, 1, 2],
+                type: 'pie',
+                analysis: "La motivazione principale nella scelta dell'indirizzo è la 'passione'. Questo dato è molto incoraggiante, poiché suggerisce che gli studenti sono guidati da un interesse genuino e non solo da considerazioni pratiche. Anche le 'opportunità lavorative' e il 'piacere per l'istituto' sono fattori importanti."
+            },
+            'q15': {
+                section: 'motivations',
+                question: "Qual è il tuo settore disciplinare preferito?",
+                labels: ["Area scientifica", "Area tecnico-pratica", "Area linguistica", "Area artistico-espressiva", "Area umanistica"],
+                data: [3, 2, 2, 2, 1],
+                type: 'pie',
+                analysis: "Le preferenze disciplinari della classe sono variegate, con una distribuzione quasi uniforme tra i vari settori. L'area scientifico-matematica e tecnico-pratica sono le più popolari. Questa diversità di interessi rappresenta un punto di forza per la classe, in quanto favorisce lo scambio di conoscenze e la collaborazione su progetti interdisciplinari."
+            },
+            'q16': {
+                section: 'motivations',
+                question: "Come ti senti all’inizio di questa nuova esperienza scolastica?",
+                labels: ["Ansioso/a", "Entusiasta", "Un po’ preoccupato/a", "Indifferente"],
+                data: [3, 4, 1, 1],
+                type: 'pie',
+                analysis: "Le emozioni all'inizio del percorso scolastico sono un mix di ansia, entusiasmo e preoccupazione. L'ansia è una sensazione naturale, legata all'incertezza del nuovo ambiente, ma è bilanciata dall'entusiasmo di affrontare nuove sfide."
+            },
+            'q17': {
+                section: 'motivations',
+                question: "Quale tra questi valori ritieni più importante a scuola?",
+                labels: ["Impegno", "Rispetto", "Collaborazione", "Creatività"],
+                data: [4, 2, 2, 2],
+                type: 'pie',
+                analysis: "Gli studenti hanno identificato l'impegno e il rispetto come i valori più importanti. Questo dato riflette una cultura scolastica che premia lo sforzo e la cooperazione tra compagni. L'autonomia e l'innovazione sono valori altrettanto importanti, che indicano un desiderio di crescere e di esplorare nuove metodologie di apprendimento."
+            },
+            'q18': {
+                section: 'motivations',
+                question: "Quale attività extrascolastica ti piacerebbe trovare a scuola?",
+                labels: ["Sport", "Teatro", "Musica", "Coding", "Altro"],
+                data: [2, 1, 1, 1, 4],
+                type: 'bar',
+                analysis: "La preferenza per le attività extrascolastiche è variegata, con lo sport e il teatro che sono le opzioni più popolari. Questo dato offre una panoramica degli interessi degli studenti e può essere utile per la pianificazione di attività extrascolastiche che supportino la loro crescita personale."
+            },
+
+            // Sezione 3: Abitudini di studio e autonomia
+            'q19': {
+                section: 'study-habits',
+                question: "Ti piace leggere?",
+                labels: ["Sì", "No"],
+                data: [6, 3],
+                type: 'pie',
+                analysis: "La maggior parte degli studenti dichiara di apprezzare la lettura. Questo è un dato positivo che può essere valorizzato con iniziative scolastiche come club del libro, concorsi di lettura e percorsi didattici che incentivino l'approfondimento di testi letterari o tecnici."
+            },
+            'q20': {
+                section: 'study-habits',
+                question: "Credi sia importante studiare e avere un diploma?",
+                labels: ["Sì, è importante", "No, non lo è", "Non so"],
+                data: [9, 0, 0],
+                type: 'pie',
+                analysis: "Tutti gli studenti della classe 1B credono che lo studio e il conseguimento di un diploma siano importanti. Questa visione a lungo termine e questa forte motivazione sono un punto di forza della classe e una base solida su cui costruire il percorso formativo."
+            },
+            'q21': {
+                section: 'study-habits',
+                question: "Passi più tempo",
+                labels: ["con Genitori", "con Nonni", "con Amici", "Da solo", "Facendo sport"],
+                data: [2, 0, 5, 2, 1],
+                type: 'pie',
+                analysis: "Il tempo libero degli studenti è dedicato principalmente agli amici, ma con una distribuzione significativa tra attività da soli e sportive. Questo equilibrio tra relazioni sociali, autonomia e attività fisica dimostra una vita equilibrata e dinamica al di fuori delle ore scolastiche."
+            },
+            'q22': {
+                section: 'study-habits',
+                question: "Quante ore dedichi allo studio ogni giorno",
+                labels: ["1-2 ore", "2-3 ore", "Meno di 1 ora", "Più di 3 ore"],
+                data: [6, 2, 1, 0],
+                type: 'pie',
+                analysis: "La maggior parte degli studenti dedica da 1 a 2 ore allo studio quotidiano. Questo dato suggerisce una gestione del tempo equilibrata, che permette di bilanciare impegni scolastici ed extrascolastici. È importante incoraggiare gli studenti a trovare il proprio ritmo di studio e a non sovraccaricarsi, mantenendo la motivazione e la concentrazione."
+            },
+            'q23': {
+                section: 'study-habits',
+                question: "Come valuti il tuo livello di autonomia nello studio?",
+                labels: ["Abbastanza autonomo/a", "Molto autonomo/a", "Poco autonomo/a", "Per niente autonomo/a"],
+                data: [6, 2, 1, 0],
+                type: 'pie',
+                analysis: "Il livello di autonomia nello studio è prevalentemente 'abbastanza autonomo/a', con una minoranza di studenti che si sente 'molto autonomo/a'. Questo risultato indica che la maggior parte degli studenti sta sviluppando le proprie capacità di auto-organizzazione e di gestione del tempo."
+            },
+            'q24': {
+                section: 'study-habits',
+                question: "Quale metodo di studio preferisci?",
+                labels: ["Schemi e mappe concettuali", "Ripetizione ad alta voce", "Studio di gruppo", "Altro"],
+                data: [5, 2, 2, 0],
+                type: 'pie',
+                analysis: "La preferenza per gli schemi e le mappe concettuali è evidente, dimostrando che gli studenti preferiscono un approccio visivo e strutturato allo studio. Anche la ripetizione ad alta voce e lo studio di gruppo sono metodi popolari, indicando una combinazione di tecniche per l'apprendimento."
+            },
+            'q25': {
+                section: 'study-habits',
+                question: "Usi spesso il computer per studiare?",
+                labels: ["Sì, sempre", "Sì, qualche volta", "Mai", "Raramente"],
+                data: [5, 3, 1, 0],
+                type: 'pie',
+                analysis: "L'uso del computer per lo studio è molto diffuso, con la maggior parte degli studenti che lo utilizza spesso o qualche volta. Questo riflette l'importanza degli strumenti digitali nell'apprendimento moderno. È essenziale che la scuola integri l'uso del computer nella didattica per preparare gli studenti a un mondo sempre più tecnologico."
+            },
+            'q26': {
+                section: 'study-habits',
+                question: "Quale tra questi strumenti digitali usi di più per studiare?",
+                labels: ["Smartphone", "Computer", "Tablet", "Nessuno"],
+                data: [4, 3, 2, 0],
+                type: 'pie',
+                analysis: "Lo smartphone è lo strumento digitale più utilizzato per lo studio. Questo dato non sorprende, data la sua ubiquità e versatilità. È importante che la scuola adotti un approccio flessibile e che incoraggi l'uso responsabile di questi dispositivi per scopi didattici."
+            },
+            'q27': {
+                section: 'study-habits',
+                question: "Come preferisci lavorare durante le lezioni?",
+                labels: ["Da solo/a", "In coppia", "In gruppo", "Dipende dalla materia"],
+                data: [3, 2, 2, 2],
+                type: 'pie',
+                analysis: "La preferenza per il lavoro 'da solo/a' e 'in coppia' è la più comune, con una minoranza di studenti che preferisce lavorare 'in gruppo'. Questo dato suggerisce una combinazione di approcci individuali e collaborativi nell'apprendimento."
+            },
+            'q28': {
+                section: 'study-habits',
+                question: "Hai bisogno di supporto per lo studio?",
+                labels: ["Sì, sempre", "Qualche volta", "Raramente", "Mai"],
+                data: [2, 5, 2, 0],
+                type: 'pie',
+                analysis: "La maggior parte degli studenti non ha bisogno di supporto per lo studio. Questo dato è un segno di fiducia nelle proprie capacità e di autonomia. Tuttavia, è importante che la scuola offra servizi di supporto per gli studenti che ne hanno bisogno, garantendo che nessuno sia lasciato indietro."
+            },
+            'q29': {
+                section: 'study-habits',
+                question: "Ti piace lavorare in gruppo?",
+                labels: ["Dipende dal gruppo", "Sì, molto", "Solo a volte", "Preferisco lavorare da solo"],
+                data: [3, 4, 1, 1],
+                type: 'pie',
+                analysis: "La preferenza per il lavoro di gruppo dipende dalla composizione del gruppo stesso. Questo dato è un segnale che l'interazione tra i membri del gruppo è cruciale per la sua efficacia. La scuola dovrebbe incoraggiare la formazione di gruppi di lavoro eterogenei e promuovere la collaborazione tra gli studenti."
+            },
+
+            // Sezione 4: Interessi, sport e tempo libero
+            'q30': {
+                section: 'interests',
+                question: "Hai fratelli o sorelle che frequentano o hanno frequentato il Primo Levi?",
+                labels: ["Sì, uno", "Sì, più di uno", "No"],
+                data: [2, 0, 7],
+                type: 'pie',
+                analysis: "Una piccola minoranza di studenti ha fratelli o sorelle che frequentano o hanno frequentato il Primo Levi. Questo dato suggerisce che la scelta dell'istituto è spesso una decisione familiare, che si basa sull'esperienza positiva di altri membri della famiglia."
+            },
+            'q31': {
+                section: 'interests',
+                question: "Quanti fratelli o sorelle hai?",
+                labels: ["Uno", "Due", "Nessuno", "Tre o più"],
+                data: [5, 2, 2, 0],
+                type: 'pie',
+                analysis: "La maggior parte degli studenti ha uno o due fratelli o sorelle. Questo dato offre una panoramica della composizione demografica della classe e può essere utile per la pianificazione di attività didattiche e sociali."
+            },
+            'q32': {
+                section: 'interests',
+                question: "Quanto tempo impieghi per arrivare a scuola?",
+                labels: ["10-30 minuti", "Meno di 10 minuti", "30-60 minuti", "Più di un'ora"],
+                data: [7, 1, 1, 0],
+                type: 'pie',
+                analysis: "La maggior parte degli studenti impiega tra 10 e 30 minuti per arrivare a scuola. Questo indica che la scuola è facilmente accessibile per la maggior parte degli studenti. È importante che la scuola continui a offrire servizi di trasporto efficienti per garantire che tutti gli studenti possano raggiungere l'istituto in modo sicuro e puntuale."
+            },
+            'q33': {
+                section: 'interests',
+                question: "Come raggiungi ogni giorno la scuola?",
+                labels: ["In autobus", "In auto", "A piedi", "In bicicletta"],
+                data: [7, 2, 0, 0],
+                type: 'pie',
+                analysis: "L'autobus è il mezzo di trasporto più utilizzato per raggiungere la scuola, seguito dall'auto e dal tragitto a piedi. Questo dato riflette la preferenza per i mezzi di trasporto pubblici e sostenibili. È importante che la scuola promuova l'uso di mezzi di trasporto sostenibili per ridurre l'impatto ambientale e per incoraggiare uno stile di vita sano."
+            },
+            'q34': {
+                section: 'interests',
+                question: "Pratichi dello Sport?",
+                labels: ["Sì", "No"],
+                data: [5, 4],
+                type: 'pie',
+                analysis: "La maggior parte degli studenti pratica sport. Questo dato è un segno di uno stile di vita attivo e sano. La scuola dovrebbe incoraggiare la partecipazione ad attività sportive e offrire una varietà di opzioni per soddisfare gli interessi di tutti gli studenti."
+            },
+            'q35': {
+                section: 'interests',
+                question: "Se si, quale sport pratichi?",
+                labels: ["Calcio", "Pallavolo", "Basket", "Nuoto", "Altro"],
+                data: [1, 1, 1, 1, 4],
+                type: 'bar',
+                analysis: "Gli sport più popolari tra gli studenti sono il calcio, la pallavolo, il basket e il nuoto. Questa preferenza per gli sport di squadra e individuali aperti a tutti indica un interesse diffuso per l'attività fisica. La scuola può sfruttare questi dati per offrire attività sportive che soddisfino gli interessi degli studenti."
+            },
+            'q36': {
+                section: 'interests',
+                question: "Hai mai partecipato ad attività di volontariato?",
+                labels: ["No, mai", "Sì, qualche volta", "Sì, spesso", "Vorrei farlo"],
+                data: [7, 2, 0, 0],
+                type: 'pie',
+                analysis: "La maggior parte degli studenti non ha mai partecipato ad attività di volontariato. Questo dato indica la possibilità di promuovere progetti di volontariato e di educazione civica per sensibilizzare gli studenti all'importanza del contributo sociale."
+            },
+
+            // Sezione 5: Esperienze e curiosità
+            'q37': {
+                section: 'curiosity',
+                question: "Quale aspetto della scuola ti incuriosisce di più?",
+                labels: ["Le materie nuove", "I nuovi compagni", "I professori", "Le attività extra"],
+                data: [6, 2, 1, 0],
+                type: 'pie',
+                analysis: "La preoccupazione principale degli studenti all'inizio dell'anno scolastico riguarda le 'materie nuove' e il 'metodo di studio'. Questo dato riflette l'incertezza e l'ansia che accompagnano l'inizio di un nuovo percorso formativo. La scuola può offrire un supporto mirato per aiutare gli studenti a superare queste preoccupazioni e a sviluppare le competenze necessarie per avere successo."
+            },
+        };
+
+        const colors = [
+            '#4299e1', '#f6ad55', '#48bb78', '#ed8936', '#9f7aea', '#ecc94b', '#a0aec0', '#e53e3e', '#3182ce', '#805ad5',
+            '#38b2ac', '#d53f8c', '#d69e2e', '#4fd1c5', '#9ae6b4', '#68d391', '#48bb78', '#38a169', '#2f855a', '#319795',
+            '#2c7a7b', '#2d3748', '#4a5568', '#718096', '#a0aec0', '#cbd5e0', '#e2e8f0', '#edf2f7', '#f7fafc', '#fff',
+        ];
+
+        const renderChart = (ctx, type, labels, data, text = '', axis = '') => {
+            new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: text,
+                        data: data,
+                        backgroundColor: colors.slice(0, data.length),
+                        borderColor: '#fff',
+                        borderWidth: 2,
+                        hoverOffset: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 20,
+                                padding: 15
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        // Visualizza la percentuale nel tooltip
+                                        label += context.parsed.toFixed(2) + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            color: '#000',
+                            formatter: (value, context) => {
+                                let sum = 0;
+                                let dataArr = context.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += data;
+                                });
+                                let percentage = (value / sum * 100).toFixed(0);
+                                return percentage > 0 ? percentage + '%' : '';
+                            },
+                            font: {
+                                weight: 'bold',
+                            },
+                            // Posiziona le etichette al centro per i grafici a torta, all'esterno per i grafici a barre
+                            anchor: type === 'pie' ? 'center' : 'end',
+                            align: type === 'pie' ? 'center' : 'start',
+                            offset: type === 'pie' ? 0 : 5
+                        }
+                    },
+                    scales: type === 'bar' ? {
+                        x: {
+                            title: {
+                                display: true,
+                                text: axis
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: text
+                            }
+                        }
+                    } : {}
+                }
+            });
+        };
+        
+        // Funzione per calcolare la percentuale per i dati del grafico
+        const calculatePercentages = (data) => {
+            const total = data.reduce((sum, value) => sum + value, 0);
+            if (total === 0) return data.map(() => 0);
+            return data.map(value => ((value / total) * 100));
+        };
+
+        const renderQuestions = () => {
+            const sections = {
+                'personal-info': document.getElementById('personal-info'),
+                'motivations': document.getElementById('motivations'),
+                'study-habits': document.getElementById('study-habits'),
+                'interests': document.getElementById('interests'),
+                'curiosity': document.getElementById('curiosity')
+            };
+            
+            for (const key in questionData) {
+                if (questionData.hasOwnProperty(key)) {
+                    const data = questionData[key];
+                    const questionCard = document.createElement('div');
+                    questionCard.className = 'card p-6';
+
+                    // Titolo
+                    const title = document.createElement('h4');
+                    title.className = 'question-title mb-4';
+                    title.textContent = `Domanda: ${data.question}`;
+                    questionCard.appendChild(title);
+
+                    // Testo di analisi
+                    const analysisText = document.createElement('p');
+                    analysisText.className = 'analysis-text mb-4 text-justify';
+                    analysisText.textContent = data.analysis;
+                    questionCard.appendChild(analysisText);
+                    
+                    // Aggiungi un separatore visivo
+                    const divider = document.createElement('hr');
+                    divider.className = 'my-4 border-gray-200';
+                    questionCard.appendChild(divider);
+
+                    // Grafico
+                    const chartContainer = document.createElement('div');
+                    chartContainer.className = 'chart-container';
+                    const canvas = document.createElement('canvas');
+                    canvas.id = `chart-${key}`;
+                    chartContainer.appendChild(canvas);
+                    questionCard.appendChild(chartContainer);
+                    
+                    sections[data.section].appendChild(questionCard);
+
+                    // Calcola le percentuali e renderizza il grafico
+                    const percentageData = calculatePercentages(data.data);
+                    renderChart(canvas.getContext('2d'), data.type, data.labels, percentageData, data.text, data.axis);
+                }
+            }
+        };
+
+        // Avvia la renderizzazione dopo che la pagina è stata caricata
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>

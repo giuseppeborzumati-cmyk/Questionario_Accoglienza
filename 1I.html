@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisi Dati Questionario - Classe 1I</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #1a202c;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .container {
+            max-width: 90%;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background-color: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        .header-section {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .section-title {
+            position: relative;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            height: 4px;
+            width: 100px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            border-radius: 2px;
+        }
+        .question-card {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            background-color: #f7f9fc;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2.5rem;
+        }
+        @media (min-width: 768px) {
+            .question-card {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+        .chart-and-legend {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .chart-container {
+            width: 300px;
+            height: 300px;
+        }
+        .analysis-text {
+            flex: 1;
+            padding: 1.5rem;
+            background-color: #e9ecef;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+            color: #495057;
+            text-align: justify;
+        }
+        .legend-custom {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+        }
+        .footer-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body class="p-6">
+
+    <div class="container">
+        <div class="header-section">
+            <h1 class="text-4xl font-extrabold tracking-wide">Analisi Dati Questionario di Accoglienza</h1>
+            <h2 class="text-2xl mt-2 font-light">Classe Prima I - Liceo Scientifico opzione Scienze Applicate</h2>
+        </div>
+        
+        <h3 class="section-title">Motivazioni e scelte scolastiche</h3>
+        
+        <!-- Domanda 5 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">5. Qual era il tuo voto di uscita dalle scuole medie?</h4>
+                <div class="analysis-text">
+                    <p>I dati mostrano che la maggioranza degli studenti della 1I ha ottenuto voti di uscita compresi tra 8 e 10, con una forte presenza di 10. Questo suggerisce un gruppo con un alto livello di preparazione accademica dalle scuole medie.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-5"></canvas>
+                </div>
+                <div id="legend-5" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 6 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">6. Come hai conosciuto l’Istituto Primo Levi?</h4>
+                <div class="analysis-text">
+                    <p>Per la classe 1I, la conoscenza dell'istituto è avvenuta in modo equo tramite la ricerca online e il passaparola di parenti/amici. Questo evidenzia l'importanza dei canali digitali e del network personale nel processo di orientamento di questo gruppo.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-6"></canvas>
+                </div>
+                <div id="legend-6" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 7 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">7. Quale è stato il consiglio orientativo?</h4>
+                <div class="analysis-text">
+                    <p>In linea con l'indirizzo di studi, la maggioranza degli studenti della 1I ha ricevuto un consiglio orientativo verso il Liceo. Segue una minoranza con un consiglio verso il Tecnico e il Professionale.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-7"></canvas>
+                </div>
+                <div id="legend-7" class="legend-custom"></div>
+            </div>
+        </div>
+        
+        <!-- Domanda 8 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">8. Hai partecipato agli open day della scuola?</h4>
+                <div class="analysis-text">
+                    <p>La partecipazione agli open day è stata estremamente alta per la 1I. Il 40% ha partecipato a più di un open day, e il 40% ad uno solo, a dimostrazione di un forte interesse e di un impegno nella fase di scelta della scuola.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-8"></canvas>
+                </div>
+                <div id="legend-8" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 9 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">9. Hai partecipato allo stage organizzato in questa scuola?</h4>
+                <div class="analysis-text">
+                    <p>La partecipazione agli stage organizzati dalla scuola per la classe 1I è stata piuttosto bassa. Un solo studente su cinque ha partecipato, un dato che suggerisce che questa attività non è stata un fattore decisivo per la maggioranza degli studenti nella scelta finale.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-9"></canvas>
+                </div>
+                <div id="legend-9" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 10 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">10. Come hai trovato le presentazioni dei nostri indirizzi durante gli open day?</h4>
+                <div class="analysis-text">
+                    <p>Un dato quasi unanime per la 1I: la totalità degli studenti ha trovato le presentazioni "interessanti, chiare e comprensibili". Questo dato riflette l'efficacia delle presentazioni e la qualità dell'informazione fornita.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-10"></canvas>
+                </div>
+                <div id="legend-10" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 13 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">13. Chi ha scelto l’indirizzo di studio che frequenti?</h4>
+                <div class="analysis-text">
+                    <p>Gli studenti della 1I hanno mostrato una buona autonomia nella scelta. Molti hanno deciso "Insieme ai genitori" o "Io stesso/a", dimostrando un coinvolgimento attivo nel proprio percorso di orientamento.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-13"></canvas>
+                </div>
+                <div id="legend-13" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 14 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">14. Perché hai scelto questo indirizzo di studio?</h4>
+                <div class="analysis-text">
+                    <p>Le opportunità lavorative e la passione sono le motivazioni più forti per gli studenti della 1I, indicando un approccio pragmatico e al tempo stesso guidato dagli interessi personali nella scelta della scuola superiore.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-14"></canvas>
+                </div>
+                <div id="legend-14" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 15 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">15. Qual è il tuo settore disciplinare preferito?</h4>
+                <div class="analysis-text">
+                    <p>Coerentemente con il Liceo Scientifico, l'area scientifica è di gran lunga il settore preferito della maggioranza degli studenti della 1I. Questo dato riflette le loro aspettative e la loro passione per le materie STEM.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-15"></canvas>
+                </div>
+                <div id="legend-15" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 16 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">16. Come ti senti all’inizio di questa nuova esperienza scolastica?</h4>
+                <div class="analysis-text">
+                    <p>La stragrande maggioranza degli studenti della 1I si sente "Entusiasta" di iniziare la scuola superiore, un dato molto positivo che riflette un'attitudine proattiva e un'aspettativa positiva verso il nuovo percorso.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-16"></canvas>
+                </div>
+                <div id="legend-16" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 17 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">17. Quale tra questi valori ritieni più importante a scuola?</h4>
+                <div class="analysis-text">
+                    <p>Impegno e Rispetto sono i valori più importanti per gli studenti della 1I, indicando una chiara consapevolezza delle basi necessarie per il successo scolastico e la convivenza in un ambiente educativo.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-17"></canvas>
+                </div>
+                <div id="legend-17" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 18 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">18. Quale attività extrascolastica ti piacerebbe trovare a scuola?</h4>
+                <div class="analysis-text">
+                    <p>Gli studenti della 1I mostrano un interesse equo per i laboratori scientifici e le attività sportive, suggerendo un desiderio di integrare l'apprendimento teorico con esperienze pratiche e fisiche.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-18"></canvas>
+                </div>
+                <div id="legend-18" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <h3 class="section-title mt-12">Abitudini di studio e autonomia</h3>
+
+        <!-- Domanda 19 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">19. Ti piace leggere?</h4>
+                <div class="analysis-text">
+                    <p>Per la 1I, la maggior parte degli studenti afferma di apprezzare la lettura, un dato incoraggiante per la promozione di attività legate alla biblioteca e alla lettura a scuola.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-19"></canvas>
+                </div>
+                <div id="legend-19" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 20 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">20. Credi sia importante studiare e avere un diploma?</h4>
+                <div class="analysis-text">
+                    <p>La totalità degli studenti della 1I considera "molto importante" studiare e ottenere un diploma. Questo atteggiamento positivo verso la formazione è un'ottima base per il successo scolastico del gruppo.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-20"></canvas>
+                </div>
+                <div id="legend-20" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 21 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">21. Passi più tempo...</h4>
+                <div class="analysis-text">
+                    <p>Gli studenti della 1I passano la maggior parte del loro tempo con i genitori, indicando il ruolo centrale della famiglia nella loro vita.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-21"></canvas>
+                </div>
+                <div id="legend-21" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 22 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">22. Quante ore dedichi allo studio ogni giorno?</h4>
+                <div class="analysis-text">
+                    <p>La maggior parte degli studenti della 1I dedica 1-2 ore allo studio quotidiano. Un gruppo significativo, però, studia meno di un'ora. Questo suggerisce la necessità di monitorare e supportare le abitudini di studio del gruppo.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-22"></canvas>
+                </div>
+                <div id="legend-22" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 23 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">23. Come valuti il tuo livello di autonomia nello studio?</h4>
+                <div class="analysis-text">
+                    <p>La maggioranza degli studenti della 1I si considera "Abbastanza autonomo/a". Tuttavia, una parte considerevole si ritiene ancora "poco autonomo/a", un'area su cui i docenti potrebbero concentrarsi per rafforzare le competenze di base.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-23"></canvas>
+                </div>
+                <div id="legend-23" class="legend-custom"></div>
+            </div>
+        </div>
+        
+        <!-- Domanda 24 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">24. Quale metodo di studio preferisci?</h4>
+                <div class="analysis-text">
+                    <p>Gli studenti della 1I preferiscono metodi di studio visivi e pratici come "Schemi e mappe concettuali" e la "Ripetizione ad alta voce". Lo "Studio di gruppo" è una preferenza meno comune.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-24"></canvas>
+                </div>
+                <div id="legend-24" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 25 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">25. Usi spesso il computer per studiare?</h4>
+                <div class="analysis-text">
+                    <p>Per la classe 1I, l'uso del computer per lo studio è molto diffuso. La maggior parte degli studenti lo usa "Sì, sempre" o "Solo per alcune materie", riflettendo l'integrazione della tecnologia nella vita di tutti i giorni.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-25"></canvas>
+                </div>
+                <div id="legend-25" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 26 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">26. Quale tra questi strumenti digitali usi di più per studiare?</h4>
+                <div class="analysis-text">
+                    <p>La maggior parte degli studenti della 1I usa lo Smartphone per studiare, seguito dal Computer e dal Tablet. Questo conferma che il dispositivo mobile è lo strumento digitale più accessibile e utilizzato per l'apprendimento.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-26"></canvas>
+                </div>
+                <div id="legend-26" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 27 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">27. Come preferisci lavorare durante le lezioni?</h4>
+                <div class="analysis-text">
+                    <p>Gli studenti della 1I preferiscono lavorare "In coppia" o "In gruppo", dimostrando un'inclinazione verso la collaborazione e l'interazione con i compagni durante le attività didattiche.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-27"></canvas>
+                </div>
+                <div id="legend-27" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 28 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">28. Hai bisogno di supporto per lo studio?</h4>
+                <div class="analysis-text">
+                    <p>La maggior parte degli studenti della 1I risponde "Qualche volta" o "Raramente", suggerendo che un supporto occasionale per lo studio potrebbe essere sufficiente a soddisfare le esigenze del gruppo.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-28"></canvas>
+                </div>
+                <div id="legend-28" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 29 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">29. Ti piace lavorare in gruppo?</h4>
+                <div class="analysis-text">
+                    <p>La maggioranza degli studenti della 1I risponde "Sì, molto" o "Solo a volte" quando si tratta di lavorare in gruppo. Questo dato conferma la predisposizione del gruppo a un approccio collaborativo.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-29"></canvas>
+                </div>
+                <div id="legend-29" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <h3 class="section-title mt-12">Interessi, sport e tempo libero</h3>
+
+        <!-- Domanda 30 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">30. Hai fratelli o sorelle che frequentano o hanno frequentato il Primo Levi?</h4>
+                <div class="analysis-text">
+                    <p>La maggioranza degli studenti della 1I non ha fratelli o sorelle che frequentano o hanno frequentato l'istituto, un dato che indica che la scelta di iscriversi è stata una decisione autonoma del singolo studente.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-30"></canvas>
+                </div>
+                <div id="legend-30" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 31 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">31. Quanti fratelli o sorelle hai?</h4>
+                <div class="analysis-text">
+                    <p>La maggioranza degli studenti della 1I ha un fratello o una sorella, riflettendo una struttura familiare comune tra i rispondenti.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-31"></canvas>
+                </div>
+                <div id="legend-31" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 32 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">32. Quanto tempo impieghi per arrivare a scuola?</h4>
+                <div class="analysis-text">
+                    <p>Per la maggior parte degli studenti della 1I, il tempo di percorrenza per la scuola è compreso tra 10 e 30 minuti, un tempo ragionevole che facilita l'arrivo e la partenza.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-32"></canvas>
+                </div>
+                <div id="legend-32" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 33 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">33. Come raggiungi ogni giorno la scuola?</h4>
+                <div class="analysis-text">
+                    <p>La maggior parte degli studenti della 1I raggiunge la scuola in autobus o a piedi. Solo un piccolo numero usa l'auto o la bicicletta.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-33"></canvas>
+                </div>
+                <div id="legend-33" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 34 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">34. Pratichi dello Sport?</h4>
+                <div class="analysis-text">
+                    <p>La maggioranza degli studenti della 1I pratica uno sport. Questo suggerisce un'attitudine positiva verso l'attività fisica e un buon equilibrio tra impegni scolastici e tempo libero.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-34"></canvas>
+                </div>
+                <div id="legend-34" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 36 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">36. Hai mai partecipato ad attività di volontariato?</h4>
+                <div class="analysis-text">
+                    <p>Una piccola parte degli studenti della 1I ha già partecipato ad attività di volontariato. Questo dato potrebbe essere un'opportunità per l'istituto di promuovere e organizzare iniziative di volontariato per coinvolgere un numero maggiore di studenti.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-36"></canvas>
+                </div>
+                <div id="legend-36" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <!-- Domanda 37 -->
+        <div class="question-card">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold mb-2">37. Quale aspetto della scuola ti incuriosisce di più?</h4>
+                <div class="analysis-text">
+                    <p>Gli studenti della 1I sono maggiormente incuriositi dalle "Materie nuove", dimostrando un forte interesse per l'apprendimento e le nuove sfide accademiche. Meno importante è la curiosità per i docenti, le attività extra e i nuovi compagni.</p>
+                </div>
+            </div>
+            <div class="chart-and-legend">
+                <div class="chart-container">
+                    <canvas id="chart-37"></canvas>
+                </div>
+                <div id="legend-37" class="legend-custom"></div>
+            </div>
+        </div>
+
+        <footer class="footer-section">
+            <p>Istituto Tecnico Superiore "Primo Levi" di Seregno - Tutti i diritti riservati</p>
+            <p class="mt-4 text-xs font-bold text-gray-600">Commenti per i docenti:</p>
+            <p class="text-xs max-w-2xl mx-auto">
+                Questo report offre una panoramica dettagliata delle abitudini di studio, delle aspettative e degli interessi degli studenti della classe 1I. I dati possono essere utilizzati per personalizzare l'approccio didattico, organizzare attività extrascolastiche mirate e rafforzare le competenze di autonomia nello studio, dove necessario.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        const classData = {
+            '5': { labels: ['6', '7-8', '9-10'], data: [0, 4, 11], analysis: "I dati mostrano che la maggioranza degli studenti della 1I ha ottenuto voti di uscita compresi tra 8 e 10, con una forte presenza di 10. Questo suggerisce un gruppo con un alto livello di preparazione accademica dalle scuole medie." },
+            '6': { labels: ['Ricerca on-line', 'Parenti/amici', 'Docenti/scuola', 'Pubblicità'], data: [5, 5, 2, 3], analysis: "Per la classe 1I, la conoscenza dell'istituto è avvenuta in modo equo tramite la ricerca online e il passaparola di parenti/amici. Questo evidenzia l'importanza dei canali digitali e del network personale nel processo di orientamento di questo gruppo." },
+            '7': { labels: ['Tecnico', 'Liceo', 'Professionale'], data: [4, 10, 1], analysis: "In linea con l'indirizzo di studi, la maggioranza degli studenti della 1I ha ricevuto un consiglio orientativo verso il Liceo. Segue una minoranza con un consiglio verso il Tecnico e il Professionale." },
+            '8': { labels: ['SI ,a più di uno', 'Si , ad uno', 'No, non mi interessavano'], data: [6, 6, 3], analysis: "La partecipazione agli open day è stata estremamente alta per la 1I. Il 40% ha partecipato a più di un open day, e il 40% ad uno solo, a dimostrazione di un forte interesse e di un impegno nella fase di scelta della scuola." },
+            '9': { labels: ['No', 'Si', 'Non mi interessavano'], data: [12, 3, 0], analysis: "La partecipazione agli stage organizzati dalla scuola per la classe 1I è stata piuttosto bassa. Un solo studente su cinque ha partecipato, un dato che suggerisce che questa attività non è stata un fattore decisivo per la maggioranza degli studenti nella scelta finale." },
+            '10': { labels: ['Interessanti, chiare e comprensibili', 'Noiose e incomprensibili', 'Non saprei'], data: [15, 0, 0], analysis: "Un dato quasi unanime per la 1I: la totalità degli studenti ha trovato le presentazioni \"interessanti, chiare e comprensibili\". Questo dato riflette l'efficacia delle presentazioni e la qualità dell'informazione fornita." },
+            '13': { labels: ['Insieme ai genitori', 'Io stesso/a', 'Un insegnante', 'I miei genitori'], data: [7, 6, 1, 1], analysis: "Gli studenti della 1I hanno mostrato una buona autonomia nella scelta. Molti hanno deciso \"Insieme ai genitori\" o \"Io stesso/a\", dimostrando un coinvolgimento attivo nel proprio percorso di orientamento." },
+            '14': { labels: ['Per le opportunità lavorative', 'Per passione', 'Perché mi è piaciuto l\'istituto', 'Ho seguito un mio amico/a'], data: [5, 5, 2, 3], analysis: "Le opportunità lavorative e la passione sono le motivazioni più forti per gli studenti della 1I, indicando un approccio pragmatico e al tempo stesso guidato dagli interessi personali nella scelta della scuola superiore." },
+            '15': { labels: ['Area tecnico-pratica', 'Area scientifica', 'Area umanistica', 'Area artistico-espressiva', 'Area linguistica'], data: [2, 11, 1, 1, 0], analysis: "Coerentemente con il Liceo Scientifico, l'area scientifica è di gran lunga il settore preferito della maggioranza degli studenti della 1I. Questo dato riflette le loro aspettative e la loro passione per le materie STEM." },
+            '16': { labels: ['Entusiasta', 'Un po’ preoccupato/a', 'Ansioso/a'], data: [10, 4, 1], analysis: "La stragrande maggioranza degli studenti della 1I si sente \"Entusiasta\" di iniziare la scuola superiore, un dato molto positivo che riflette un'attitudine proattiva e un'aspettativa positiva verso il nuovo percorso." },
+            '17': { labels: ['Impegno', 'Rispetto', 'Collaborazione', 'Creatività'], data: [9, 5, 1, 0], analysis: "Impegno e Rispetto sono i valori più importanti per gli studenti della 1I, indicando una chiara consapevolezza delle basi necessarie per il successo scolastico e la convivenza in un ambiente educativo." },
+            '18': { labels: ['Laboratori scientifici', 'Attività sportive', 'Corsi di teatro', 'Corsi musicali', 'Niente'], data: [4, 4, 3, 2, 2], analysis: "Gli studenti della 1I mostrano un interesse equo per i laboratori scientifici e le attività sportive, suggerendo un desiderio di integrare l'apprendimento teorico con esperienze pratiche e fisiche." },
+            '19': { labels: ['Si', 'No'], data: [13, 2], analysis: "Per la 1I, la maggior parte degli studenti afferma di apprezzare la lettura, un dato incoraggiante per la promozione di attività legate alla biblioteca e alla lettura a scuola." },
+            '20': { labels: ['Si, è importante'], data: [15], analysis: "La totalità degli studenti della 1I considera \"molto importante\" studiare e ottenere un diploma. Questo atteggiamento positivo verso la formazione è un'ottima base per il successo scolastico del gruppo." },
+            '21': { labels: ['con Genitori', 'con Amici', 'con Nonni', 'Da solo', 'Facendo sport'], data: [7, 5, 1, 2, 0], analysis: "Gli studenti della 1I passano la maggior parte del loro tempo con i genitori, indicando il ruolo centrale della famiglia nella loro vita." },
+            '22': { labels: ['1-2 ore', 'Meno di 1 ora', 'Più di 3 ore'], data: [8, 5, 2], analysis: "La maggior parte degli studenti della 1I dedica 1-2 ore allo studio quotidiano. Un gruppo significativo, però, studia meno di un'ora. Questo suggerisce la necessità di monitorare e supportare le abitudini di studio del gruppo." },
+            '23': { labels: ['Abbastanza autonomo/a', 'Molto autonomo/a', 'Poco autonomo/a'], data: [9, 4, 2], analysis: "La maggioranza degli studenti della 1I si considera \"Abbastanza autonomo/a\". Tuttavia, una parte considerevole si ritiene ancora \"poco autonomo/a\", un'area su cui i docenti potrebbero concentrarsi per rafforzare le competenze di base." },
+            '24': { labels: ['Schemi e mappe concettuali', 'Ripetizione ad alta voce', 'Studio di gruppo', 'Altro'], data: [7, 4, 2, 2], analysis: "Gli studenti della 1I preferiscono metodi di studio visivi e pratici come \"Schemi e mappe concettuali\" e la \"Ripetizione ad alta voce\". Lo \"Studio di gruppo\" è una preferenza meno comune." },
+            '25': { labels: ['Sì, sempre', 'Solo per alcune materie', 'Raramente'], data: [7, 6, 2], analysis: "Per la classe 1I, l'uso del computer per lo studio è molto diffuso. La maggior parte degli studenti lo usa \"Sì, sempre\" o \"Solo per alcune materie\", riflettendo l'integrazione della tecnologia nella vita di tutti i giorni." },
+            '26': { labels: ['Smartphone', 'Computer', 'Tablet'], data: [8, 4, 3], analysis: "La maggior parte degli studenti della 1I usa lo Smartphone per studiare, seguito dal Computer e dal Tablet. Questo conferma che il dispositivo mobile è lo strumento digitale più accessibile e utilizzato per l'apprendimento." },
+            '27': { labels: ['In coppia', 'In gruppo', 'Da solo/a', 'Dipende dalla materia'], data: [7, 4, 2, 2], analysis: "Gli studenti della 1I preferiscono lavorare \"In coppia\" o \"In gruppo\", dimostrando un'inclinazione verso la collaborazione e l'interazione con i compagni durante le attività didattiche." },
+            '28': { labels: ['Qualche volta', 'Raramente', 'Sì, sempre'], data: [10, 4, 1], analysis: "La maggior parte degli studenti della 1I risponde \"Qualche volta\" o \"Raramente\", suggerendo che un supporto occasionale per lo studio potrebbe essere sufficiente a soddisfare le esigenze del gruppo." },
+            '29': { labels: ['Sì, molto', 'Solo a volte', 'Preferisco lavorare da solo', 'Dipende dal gruppo'], data: [8, 4, 2, 1], analysis: "La maggioranza degli studenti della 1I risponde \"Sì, molto\" o \"Solo a volte\" quando si tratta di lavorare in gruppo. Questo dato conferma la predisposizione del gruppo a un approccio collaborativo." },
+            '30': { labels: ['No', 'Sì, uno', 'Sì, più di uno'], data: [10, 4, 1], analysis: "La maggioranza degli studenti della 1I non ha fratelli o sorelle che frequentano o hanno frequentato l'istituto, un dato che indica che la scelta di iscriversi è stata una decisione autonoma del singolo studente." },
+            '31': { labels: ['Uno', 'Nessuno', 'Due', 'Tre o più'], data: [8, 4, 2, 1], analysis: "La maggioranza degli studenti della 1I ha un fratello o una sorella, riflettendo una struttura familiare comune tra i rispondenti." },
+            '32': { labels: ['10-30 minuti', 'Meno di 10 minuti', '30-60 minuti'], data: [10, 3, 2], analysis: "Per la maggior parte degli studenti della 1I, il tempo di percorrenza per la scuola è compreso tra 10 e 30 minuti, un tempo ragionevole che facilita l'arrivo e la partenza." },
+            '33': { labels: ['In autobus', 'In auto', 'A piedi', 'In bicicletta'], data: [8, 3, 3, 1], analysis: "La maggior parte degli studenti della 1I raggiunge la scuola in autobus o a piedi. Solo un piccolo numero usa l'auto o la bicicletta." },
+            '34': { labels: ['Si', 'No'], data: [12, 3], analysis: "La maggioranza degli studenti della 1I pratica uno sport. Questo suggerisce un'attitudine positiva verso l'attività fisica e un buon equilibrio tra impegni scolastici e tempo libero." },
+            '36': { labels: ['Sì, qualche volta', 'No, mai', 'Sì, spesso'], data: [6, 5, 4], analysis: "Una piccola parte degli studenti della 1I ha già partecipato ad attività di volontariato. Questo dato potrebbe essere un'opportunità per l'istituto di promuovere e organizzare iniziative di volontariato per coinvolgere un numero maggiore di studenti." },
+            '37': { labels: ['Le materie nuove', 'I professori', 'Le attività extra', 'I nuovi compagni'], data: [11, 2, 1, 1], analysis: "Gli studenti della 1I sono maggiormente incuriositi dalle \"Materie nuove\", dimostrando un forte interesse per l'apprendimento e le nuove sfide accademiche. Meno importante è la curiosità per i docenti, le attività extra e i nuovi compagni." }
+        };
+
+        const chartColors = [
+            '#4A90E2', '#50E3C2', '#F5A623', '#BD10E0', '#FF3B30', '#5AC8FA', '#FFCC00', '#8E8E93', '#C7C7CC', '#A2D2FF', '#83C5BE'
+        ];
+
+        const renderChart = (ctx, type, labels, data) => {
+            const total = data.reduce((sum, value) => sum + value, 0);
+            const percentages = data.map(value => ((value / total) * 100).toFixed(1));
+
+            new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Percentuale',
+                        data: data,
+                        backgroundColor: chartColors.slice(0, data.length),
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        datalabels: {
+                            color: '#fff',
+                            font: {
+                                weight: 'bold',
+                                size: 14,
+                            },
+                            formatter: (value, context) => {
+                                return percentages[context.dataIndex] + '%';
+                            }
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            top: 20
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        };
+
+        const createCustomLegend = (questionId, labels, data) => {
+            const legendContainer = document.getElementById(`legend-${questionId}`);
+            if (!legendContainer) return;
+            legendContainer.innerHTML = '';
+            const total = data.reduce((sum, value) => sum + value, 0);
+
+            labels.forEach((label, index) => {
+                const percentage = ((data[index] / total) * 100).toFixed(1);
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                legendItem.innerHTML = `
+                    <div class="legend-color" style="background-color: ${chartColors[index]};"></div>
+                    <span>${label} (${percentage}%)</span>
+                `;
+                legendContainer.appendChild(legendItem);
+            });
+        };
+
+        window.onload = () => {
+            for (const [key, data] of Object.entries(classData)) {
+                const canvas = document.getElementById(`chart-${key}`);
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    renderChart(ctx, 'pie', data.labels, data.data);
+                    createCustomLegend(key, data.labels, data.data);
+                }
+            }
+        };
+    </script>
+</body>
+</html>

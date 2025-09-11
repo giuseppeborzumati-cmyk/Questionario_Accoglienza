@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report di Accoglienza Classi Prime</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .header-bar {
+            background-color: #2980b9;
+            color: #fff;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            border-bottom: 5px solid #3498db;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 2.5rem;
+            background-color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #2980b9;
+            border-bottom: 3px solid #e5f1f8;
+            padding-bottom: 0.75rem;
+            margin-top: 3.5rem;
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #34495e;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-top: 2.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        canvas {
+            background: #fdfefe;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        canvas:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-box {
+            background-color: #ecf0f1;
+            border-left: 6px solid #2980b9;
+            padding: 1.75rem;
+            border-radius: 10px;
+            margin-top: 1.75rem;
+        }
+
+        .comment-box p {
+            color: #34495e;
+        }
+
+        .summary-box {
+            background-color: #f8f9f9;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
+        }
+
+        .teacher-comments {
+            background-color: #fbecec;
+            border-left: 6px solid #e74c3c;
+            padding: 2.5rem;
+            border-radius: 10px;
+            margin-top: 4rem;
+        }
+
+        .teacher-comments h3 {
+            color: #c0392b;
+            font-weight: 700;
+            font-size: 1.75rem;
+        }
+
+        .signature {
+            margin-top: 2.5rem;
+            text-align: right;
+            font-style: italic;
+            font-weight: 500;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="header-bar">
+        <h1>ITSC "Primo Levi" di Seregno</h1>
+        <p class="text-lg mt-2 font-light">Analisi del Questionario di Accoglienza della Classe 1N</p>
+        <p class="text-lg mt-2 font-light">Costruzioni, Ambiente e Territorio</p>
+    </div>
+
+    <div class="container my-10">
+        <header class="text-center mb-10">
+            <h2 class="text-2xl font-bold text-gray-800">Dati della Classe</h2>
+            <p class="text-lg text-gray-600 mt-2">Classe: 1N</p>
+        </header>
+
+        <hr class="border-t border-gray-300 my-8">
+
+        <!-- Analisi delle risposte aperte -->
+        <h2>1. Feedback dagli Open Day</h2>
+        <div class="summary-box">
+            <h3 class="text-gray-700">Cosa ha colpito in particolare gli studenti?</h3>
+            <p class="mt-4">
+                Le risposte aperte sul tema "cosa ti ha colpito in particolare" rivelano un forte interesse per l'ambiente scolastico e per le aule specializzate, come i laboratori. Questo sottolinea l'importanza di spazi didattici innovativi e ben attrezzati che offrono un'esperienza pratica e coinvolgente, particolarmente rilevante per l'indirizzo di Costruzioni, Ambiente e Territorio.
+            </p>
+        </div>
+        <div class="summary-box mt-8">
+            <h3 class="text-gray-700">Suggerimenti per migliorare l'esperienza degli Open Day</h3>
+            <p class="mt-4">
+                La classe non ha segnalato particolari criticità, esprimendo un giudizio complessivamente positivo. Questo feedback, unito alla soddisfazione per la qualità delle presentazioni, dimostra l'efficacia del format e della preparazione del team di orientamento.
+            </p>
+        </div>
+
+        <hr class="border-t border-gray-300 my-8">
+
+        <!-- Motivazioni e scelte scolastiche -->
+        <h2>2. Motivazioni e Scelte Scolastiche</h2>
+        <div class="chart-container">
+            <!-- Domanda 5: Voto di uscita medie -->
+            <div>
+                <h3>5. Qual era il tuo voto di uscita dalle scuole medie?</h3>
+                <canvas id="chart5"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La classe 1N presenta una distribuzione di voti di uscita dalla scuola media solida, con una netta maggioranza di studenti che ha conseguito un voto tra il 9 e il 10. Questo denota un gruppo di studenti con un alto livello di preparazione e potenziale accademico, il che è una base eccellente per affrontare le sfide del percorso di Costruzioni, Ambiente e Territorio.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 6: Come hai conosciuto l’Istituto Primo Levi? -->
+            <div>
+                <h3>6. Come hai conosciuto l’Istituto Primo Levi?</h3>
+                <canvas id="chart6"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Le risposte evidenziano una combinazione di canali per la conoscenza dell'istituto. La ricerca online si conferma come uno strumento fondamentale, ma un'elevata percentuale di studenti ha scoperto la scuola tramite il passaparola di amici e parenti o durante gli Open Day. Ciò sottolinea l'importanza di una forte presenza sia online che sul territorio.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 7: Consiglio orientativo -->
+            <div>
+                <h3>7. Quale è stato il consiglio orientativo?</h3>
+                <canvas id="chart7"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Il consiglio orientativo più comune è stato il Liceo, in linea con l'indirizzo di studi scelto. Una parte degli studenti ha ricevuto un consiglio per il Tecnico, indicando che l'istituto è percepito come una valida opzione anche per chi è interessato a percorsi di studio più pratici e tecnici.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 8: Open day -->
+            <div>
+                <h3>8. Hai partecipato agli open day della scuola?</h3>
+                <canvas id="chart8"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La quasi totalità degli studenti ha partecipato agli open day, con una quota molto elevata che ha visitato la scuola più di una volta. Questo dato conferma il successo e la capacità degli eventi di orientamento di attirare e convincere i futuri studenti, rafforzando la loro motivazione.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 9: Stage -->
+            <div>
+                <h3>9. Hai partecipato allo stage organizzato in questa scuola?</h3>
+                <canvas id="chart9"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La maggioranza degli studenti di questa classe non ha partecipato allo stage. Questo suggerisce che lo stage potrebbe non essere percepito come un'opportunità di orientamento cruciale per chi è già propenso a un percorso liceale. È un'area in cui la scuola potrebbe promuovere maggiormente l'offerta per coinvolgere un numero più alto di studenti interessati.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 10: Presentazioni open day -->
+            <div>
+                <h3>10. Come hai trovato le presentazioni dei nostri indirizzi durante gli open day?</h3>
+                <canvas id="chart10"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Il giudizio sulle presentazioni è quasi totalmente positivo, con la maggior parte degli studenti che le ha trovate interessanti, chiare e comprensibili. Questo è un risultato eccellente che conferma la validità del format e l'efficacia delle spiegazioni fornite durante gli eventi.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 13: Chi ha scelto l’indirizzo? -->
+            <div>
+                <h3>13. Chi ha scelto l’indirizzo di studio che frequenti?</h3>
+                <canvas id="chart13"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La scelta dell'indirizzo è stata prevalentemente una decisione condivisa con i genitori o presa in autonomia. Questo indica che la maggior parte degli studenti ha fatto una scelta consapevole e ponderata, con il supporto della famiglia, il che è un fattore positivo per la motivazione e la persistenza nel percorso di studi.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 14: Perché hai scelto questo indirizzo? -->
+            <div>
+                <h3>14. Perché hai scelto questo indirizzo di studio?</h3>
+                <canvas id="chart14"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La passione per il settore è la motivazione principale per la maggioranza degli studenti, seguita dall'apprezzamento per l'istituto stesso. Questo dimostra che la scelta non è basata unicamente su considerazioni future, ma su un'autentica affinità con i contenuti e l'ambiente scolastico. Un'ottima premessa per il successo.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 15: Settore disciplinare preferito -->
+            <div>
+                <h3>15. Qual è il tuo settore disciplinare preferito?</h3>
+                <canvas id="chart15"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Come ci si aspetta da un istituto tecnico, il dato più significativo è la schiacciante preferenza per l'area scientifica, che domina in maniera assoluta. Ciò conferma la vocazione e gli interessi della classe e suggerisce che un approccio didattico basato sulla sperimentazione e sull'approfondimento di queste materie sarà molto apprezzato.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 16: Come ti senti? -->
+            <div>
+                <h3>16. Come ti senti all’inizio di questa nuova esperienza scolastica?</h3>
+                <canvas id="chart16"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Il sentiment della classe è prevalentemente entusiasta e positivo. Questo indica che la transizione dalla scuola media alla superiore è avvenuta in modo sereno e che gli studenti sono pronti ad abbracciare questa nuova fase della loro vita con curiosità e aspettative alte.</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-t border-gray-300 my-8">
+
+        <!-- Abitudini di studio e autonomia -->
+        <h2>3. Abitudini di Studio e Autonomia</h2>
+        <div class="chart-container">
+            <!-- Domanda 17: Valore più importante -->
+            <div>
+                <h3>17. Quale tra questi valori ritieni più importante a scuola?</h3>
+                <canvas id="chart17"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>L'impegno e la collaborazione sono i valori più importanti per gli studenti della 1N. Questo dimostra una spiccata propensione sia al lavoro individuale che a quello di squadra, un'ottima combinazione per il successo accademico e per la crescita personale e sociale.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 18: Attività extrascolastica desiderata -->
+            <div>
+                <h3>18. Quale attività extrascolastica ti piacerebbe trovare a scuola?</h3>
+                <canvas id="chart18"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>L'interesse per i laboratori scientifici e le attività sportive è molto forte. Ciò suggerisce che gli studenti cercano esperienze pratiche e che mirano a un sano equilibrio tra studio e benessere fisico. La scuola può sfruttare questa passione per arricchire l'offerta extra-curriculare.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 19: Ti piace leggere? -->
+            <div>
+                <h3>19. Ti piace leggere?</h3>
+                <canvas id="chart19"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La quasi totalità degli studenti di questa classe ama leggere. Questo è un dato prezioso che può essere sfruttato per integrare progetti di lettura, promuovere la biblioteca scolastica o organizzare incontri con autori per stimolare ulteriormente questa passione.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 20: Importanza del diploma -->
+            <div>
+                <h3>20. Credi sia importante studiare e avere un diploma?</h3>
+                <canvas id="chart20"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La classe è unanime: tutti gli studenti ritengono che studiare e avere un diploma sia importante. Questa consapevolezza del valore della formazione riflette una forte motivazione intrinseca e un grande senso di responsabilità.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 21: Passi più tempo -->
+            <div>
+                <h3>21. Passi più tempo</h3>
+                <canvas id="chart21"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Il tempo libero è equamente diviso tra amici e genitori, il che indica un buon equilibrio tra il supporto familiare e l'interazione sociale. Questo dato suggerisce un contesto familiare positivo e la possibilità di coinvolgere attivamente le famiglie nel percorso scolastico.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 22: Ore di studio -->
+            <div>
+                <h3>22. Quante ore dedichi allo studio ogni giorno?</h3>
+                <canvas id="chart22"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La maggioranza degli studenti dedica 1-2 ore allo studio ogni giorno, una media sana e gestibile. La scuola può aiutare gli studenti a mantenere questa abitudine, fornendo strategie per ottimizzare il tempo dedicato ai compiti e ai progetti.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 23: Autonomia nello studio -->
+            <div>
+                <h3>23. Come valuti il tuo livello di autonomia nello studio?</h3>
+                <canvas id="chart23"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La maggioranza si ritiene abbastanza o molto autonoma nello studio. Questo è un dato molto positivo per un approccio didattico che stimola la responsabilità personale e l'indipendenza, un aspetto cruciale per il successo nel percorso tecnico.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 24: Metodo di studio preferito -->
+            <div>
+                <h3>24. Quale metodo di studio preferisci?</h3>
+                <canvas id="chart24"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>I metodi di studio più popolari sono le mappe concettuali e la ripetizione ad alta voce. La scuola può incoraggiare l'uso di questi strumenti e introdurne di nuovi, come lo studio di gruppo, per arricchire il repertorio di studio degli studenti.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 25: Uso del computer per studiare -->
+            <div>
+                <h3>25. Usi spesso il computer per studiare?</h3>
+                <canvas id="chart25"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>L'uso del computer per studiare è una pratica comune nella classe, sia in modo costante che per materie specifiche. Questo dato sottolinea l'importanza di integrare gli strumenti digitali nella didattica per supportare le abitudini di studio dei ragazzi e prepararli al futuro.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 26: Strumento digitale più usato -->
+            <div>
+                <h3>26. Quale tra questi strumenti digitali usi di più per studiare?</h3>
+                <canvas id="chart26"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Il computer e lo smartphone sono gli strumenti digitali più utilizzati. Questo dato è un'informazione cruciale per lo sviluppo di risorse didattiche che si adattino alle abitudini di studio degli studenti e che li aiutino a ottimizzare il loro tempo e le loro risorse.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 27: Lavoro in classe -->
+            <div>
+                <h3>27. Come preferisci lavorare durante le lezioni?</h3>
+                <canvas id="chart27"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Gli studenti preferiscono lavorare in coppia e in gruppo, il che evidenzia una spiccata propensione alla collaborazione e all'interazione sociale. I docenti possono sfruttare questo dato per creare attività didattiche basate sul lavoro di squadra e sul confronto reciproco.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 28: Supporto allo studio -->
+            <div>
+                <h3>28. Hai bisogno di supporto per lo studio?</h3>
+                <canvas id="chart28"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Il bisogno di supporto è distribuito, ma una parte significativa degli studenti ne ha bisogno solo qualche volta o raramente. Questo suggerisce che un supporto personalizzato, come sportelli di ascolto o brevi tutoraggi, potrebbe essere la soluzione più efficace per aiutare gli studenti a superare le loro difficoltà.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 29: Lavoro di gruppo -->
+            <div>
+                <h3>29. Ti piace lavorare in gruppo?</h3>
+                <canvas id="chart29"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Il dato conferma la propensione alla collaborazione: la maggior parte degli studenti ama lavorare in gruppo. Questo è un segnale molto positivo e una risorsa preziosa per la didattica, che può essere utilizzata per promuovere un ambiente di apprendimento cooperativo e motivante.</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-t border-gray-300 my-8">
+
+        <!-- Interessi, sport e tempo libero -->
+        <h2>4. Interessi, Sport e Tempo Libero</h2>
+        <div class="chart-container">
+            <!-- Domanda 30: Fratelli/sorelle -->
+            <div>
+                <h3>30. Hai fratelli o sorelle che frequentano o hanno frequentato il Primo Levi?</h3>
+                <canvas id="chart30"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Una piccola percentuale di studenti ha fratelli o sorelle che hanno frequentato o che frequentano il "Primo Levi", dimostrando che l'istituto ha una reputazione positiva all'interno delle famiglie e che la fiducia si trasmette tra i membri di una stessa famiglia.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 31: Quanti fratelli? -->
+            <div>
+                <h3>31. Quanti fratelli o sorelle hai?</h3>
+                <canvas id="chart31"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La maggioranza degli studenti ha uno o due fratelli o sorelle. Questo dato sociodemografico è utile per la comprensione del contesto familiare degli studenti e per l'organizzazione delle attività che coinvolgono le famiglie.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 32: Tempo per arrivare a scuola -->
+            <div>
+                <h3>32. Quanto tempo impieghi per arrivare a scuola?</h3>
+                <canvas id="chart32"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La maggior parte degli studenti impiega 10-30 minuti per raggiungere la scuola, il che suggerisce che provengono da un'area geografica relativamente vicina. Questo è un vantaggio per la frequenza e la partecipazione alle attività scolastiche.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 33: Come raggiungi la scuola? -->
+            <div>
+                <h3>33. Come raggiungi ogni giorno la scuola?</h3>
+                <canvas id="chart33"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>L'utilizzo dell'autobus e dell'auto sono i modi più comuni per raggiungere la scuola. La scuola potrebbe migliorare il servizio di trasporto pubblico, se necessario, per accogliere il maggior numero di studenti che lo utilizzano.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 34: Pratichi sport? -->
+            <div>
+                <h3>34. Pratichi dello Sport?</h3>
+                <canvas id="chart34"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>La stragrande maggioranza degli studenti pratica sport. Questo evidenzia un interesse per le attività fisiche e un buon equilibrio tra vita scolastica e tempo libero. La scuola può sfruttare questa passione per organizzare tornei o attività sportive che coinvolgano la comunità scolastica.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 36: Hai partecipato attività di volontariato? -->
+            <div>
+                <h3>36. Hai partecipato a un'attività di volontariato?</h3>
+                <canvas id="chart36"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Una parte significativa degli studenti non ha mai partecipato a un'attività di volontariato, ma la voglia di farlo è presente. Questo dato indica un potenziale inespresso e offre un'opportunità unica per la scuola di promuovere progetti di volontariato e servizio civico, che possono arricchire il percorso formativo degli studenti e connetterli con il territorio.</p>
+                </div>
+            </div>
+
+            <!-- Domanda 37: Quale aspetto della scuola ti incuriosisce di più? -->
+            <div>
+                <h3>37. Quale aspetto della scuola ti incuriosisce di più?</h3>
+                <canvas id="chart37"></canvas>
+                <div class="comment-box">
+                    <p class="font-bold text-lg mb-2">Analisi</p>
+                    <p>Gli aspetti che più incuriosiscono gli studenti sono le nuove materie e i professori, a dimostrazione di una curiosità e un'apertura verso i nuovi stimoli che la scuola offre. Questo dato è una grande risorsa per i docenti, che possono utilizzare questa curiosità per rendere le lezioni più coinvolgenti e interessanti.</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-t border-gray-300 my-8">
+
+        <!-- Commenti finali per i docenti -->
+        <div class="teacher-comments">
+            <h3 class="text-red-700">Riflessioni e suggerimenti per i docenti di Costruzioni, Ambiente e Territorio</h3>
+            <p>
+                L'analisi del questionario offre un quadro estremamente positivo e incoraggiante per la classe 1N, che sembra pronta e motivata ad affrontare il percorso di studi tecnico. I dati evidenziano un gruppo di ragazzi con un'alta preparazione di base, una spiccata propensione alla collaborazione e un forte interesse per le discipline tecniche, che sono fondamentali per questo indirizzo.
+            </p>
+            <p class="mt-4">
+                La transizione alla scuola superiore sembra essere vissuta con entusiasmo e la scelta dell'indirizzo è stata consapevole. Per massimizzare queste potenzialità, suggeriamo di capitalizzare su queste basi solide, prestando particolare attenzione ai seguenti punti:
+            </p>
+            <ul class="list-disc list-inside mt-4 space-y-2 text-gray-700">
+                <li>Progettare attività didattiche collaborative: Visto che gli studenti preferiscono lavorare in coppia e in gruppo, si possono inserire progetti di gruppo e laboratori che favoriscano il lavoro di squadra.</li>
+                <li>Supporto all'autonomia: Sebbene la maggior parte si senta autonoma, è utile offrire un breve modulo di avvio all'anno scolastico, per condividere metodi di studio efficaci come l'uso di schemi e mappe concettuali.</li>
+                <li>Valorizzare gli interessi extrascolastici: L'interesse per sport e laboratori scientifici può essere un punto di partenza per organizzare attività pomeridiane o progetti didattici che coinvolgano attivamente gli studenti.</li>
+                <li>Integrare gli strumenti digitali: Poiché il computer è lo strumento più utilizzato, si può considerare l'uso di app didattiche o risorse online ottimizzate per il mobile.</li>
+            </ul>
+            <p class="signature">
+                Funzione Accoglienza<br>
+                ITSC "Primo Levi" di Seregno
+            </p>
+        </div>
+    </div>
+
+    <!-- Script per i grafici -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script>
+        // Nuova palette di colori vivace
+        const colors = [
+            '#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6',
+            '#34495e', '#1abc9c', '#f39c12', '#d35400', '#c0392b',
+            '#2c3e50', '#7f8c8d'
+        ];
+
+        // Dati hard-coded aggiornati per i grafici (Class 1N)
+        const datasets = {
+            chart5: { labels: ['6', '7-8', '9-10'], data: [5, 30, 65] },
+            chart6: { labels: ['Ricerca on-line', 'Parenti/amici', 'Open day', 'Docenti/scuola'], data: [40, 30, 15, 15] },
+            chart7: { labels: ['Liceo', 'Tecnico', 'Professionale'], data: [80, 15, 5] },
+            chart8: { labels: ['Sì, a uno', 'Sì, a più di uno', 'No, non ho trovato posto'], data: [50, 45, 5] },
+            chart9: { labels: ['No', 'Sì', 'Non mi interessava'], data: [70, 25, 5] },
+            chart10: { labels: ['Interessanti, chiare e comprensibili', 'Poco interessanti'], data: [90, 10] },
+            chart13: { labels: ['Insieme ai genitori', 'Io stesso/a', 'I miei genitori'], data: [60, 35, 5] },
+            chart14: { labels: ['Per passione', 'Per le opportunità lavorative', 'Perché mi è piaciuto l\'istituto', 'Perché vicino a casa'], data: [60, 15, 20, 5] },
+            chart15: { labels: ['Area scientifica', 'Area umanistica', 'Area tecnico-pratica'], data: [85, 10, 5] },
+            chart16: { labels: ['Entusiasta', 'Un po’ preoccupato/a'], data: [90, 10] },
+            chart17: { labels: ['Impegno', 'Collaborazione', 'Rispetto', 'Creatività'], data: [45, 35, 15, 5] },
+            chart18: { labels: ['Laboratori scientifici', 'Attività sportive', 'Corsi musicali', 'Corsi di teatro', 'Altro'], data: [40, 30, 10, 10, 10] },
+            chart19: { labels: ['Sì', 'No'], data: [95, 5] },
+            chart20: { labels: ['Sì, è importante'], data: [100] },
+            chart21: { labels: ['con Genitori', 'con Amici', 'Da solo'], data: [40, 50, 10] },
+            chart22: { labels: ['1-2 ore', '2-3 ore', 'Meno di 1 ora'], data: [55, 35, 10] },
+            chart23: { labels: ['Abbastanza autonomo/a', 'Molto autonomo/a', 'Poco autonomo/a'], data: [60, 30, 10] },
+            chart24: { labels: ['Schemi e mappe concettuali', 'Ripetizione ad alta voce', 'Studio di gruppo'], data: [40, 30, 30] },
+            chart25: { labels: ['Sì, sempre', 'Solo per alcune materie', 'Raramente', 'Mai'], data: [40, 40, 15, 5] },
+            chart26: { labels: ['Computer', 'Smartphone', 'Tablet'], data: [50, 40, 10] },
+            chart27: { labels: ['In gruppo', 'In coppia', 'Da solo/a'], data: [45, 45, 10] },
+            chart28: { labels: ['Qualche volta', 'Raramente', 'Mai', 'Sì, sempre'], data: [50, 30, 10, 10] },
+            chart29: { labels: ['Sì, molto', 'Solo a volte', 'Dipende dal gruppo'], data: [70, 20, 10] },
+            chart30: { labels: ['No', 'Sì, uno'], data: [80, 20] },
+            chart31: { labels: ['Uno', 'Due', 'Nessuno'], data: [50, 30, 20] },
+            chart32: { labels: ['10-30 minuti', 'Meno di 10 minuti', '30-60 minuti'], data: [70, 15, 15] },
+            chart33: { labels: ['In autobus', 'In auto', 'A piedi'], data: [50, 40, 10] },
+            chart34: { labels: ['Sì', 'No'], data: [85, 15] },
+            chart36: { labels: ['No, mai', 'Sì, qualche volta', 'Vorrei farlo', 'Sì, spesso'], data: [40, 30, 20, 10] },
+            chart37: { labels: ['Le materie nuove', 'I professori', 'I nuovi compagni', 'Le attività extra'], data: [40, 30, 20, 10] },
+        };
+
+        // Funzione per creare i grafici a torta
+        function createPieChart(id) {
+            const ctx = document.getElementById(id).getContext('2d');
+            const data = datasets[id];
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        data: data.data,
+                        backgroundColor: colors.slice(0, data.labels.length),
+                        hoverOffset: 8,
+                        borderColor: '#fff',
+                        borderWidth: 2,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { family: 'Inter', size: 14 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed !== null) {
+                                        let sum = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        let percentage = (context.parsed * 100 / sum).toFixed(0) + '%';
+                                        label += percentage;
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(data => { sum += data; });
+                                let percentage = (value * 100 / sum).toFixed(0) + '%';
+                                return percentage;
+                            },
+                            color: '#fff',
+                            font: {
+                                weight: 'bold',
+                                size: 14,
+                            },
+                            textShadowColor: 'rgba(0,0,0,0.5)',
+                            textShadowBlur: 5,
+                        }
+                    }
+                },
+            });
+        }
+
+        // Inizializza i grafici quando la pagina è caricata
+        window.onload = function() {
+            Chart.register(ChartDataLabels);
+            for (const key in datasets) {
+                createPieChart(key);
+            }
+        };
+    </script>
+</body>
+
+</html>
